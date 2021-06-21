@@ -49,6 +49,26 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Đăng nhập`
+  String get login {
+    return Intl.message(
+      'Đăng nhập',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hoặc đang ký ngay`
+  String get orRegisterNow {
+    return Intl.message(
+      'Hoặc đang ký ngay',
+      name: 'orRegisterNow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -56,6 +76,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
+      Locale.fromSubtags(languageCode: 'vi'),
       Locale.fromSubtags(languageCode: 'en'),
     ];
   }

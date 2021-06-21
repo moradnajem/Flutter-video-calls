@@ -15,7 +15,7 @@ class Log {
     Logger.root.level = level;
   }
 
-  static void info(String tag, String message,
+  static void info(String tag, String? message,
       [Object? error, StackTrace? stackTrace]) {
     _instance?.info('$tag: $message', error, stackTrace);
   }

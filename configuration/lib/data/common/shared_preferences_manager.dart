@@ -19,5 +19,10 @@ class SharedPreferencesManager {
 
   int? getInt(String key) => _sharedPreferences?.getInt(key);
 
+  Future<bool?>? putBool(String key, bool value) =>
+      _sharedPreferences?.setBool(key, value);
+
+  bool? getBool(String key) => _sharedPreferences?.getBool(key);
+
   Future? clear() => _sharedPreferences?.clear();
 }

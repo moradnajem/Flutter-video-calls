@@ -5,7 +5,7 @@ import 'package:flutter_video_calls/views/sign_in/cubit/signin_cubit.dart';
 import 'package:flutter_video_calls/views/sign_in/ui/signin_screen.dart';
 
 class SignInRoute extends RouteDefine {
-  static const ID = "Splash";
+  static const ID = "SignIn";
 
   @override
   List<Path> initRoute(Object? arguments) => [

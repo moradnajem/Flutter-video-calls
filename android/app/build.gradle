@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.vnapnic.flutter_video_calls"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
