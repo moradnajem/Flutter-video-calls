@@ -84,11 +84,6 @@ android {
             versionNameSuffix = "-staging"
             resValue "string", "app_name", "FArchitecture Stg"
         }
-        preprod {
-            applicationIdSuffix ".preprod"
-            versionNameSuffix = "-preprod"
-            resValue "string", "app_name", "FArchitecture pred"
-        }
 
         production {
             resValue "string", "app_name", "FArchitecture"

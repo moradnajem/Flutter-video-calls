@@ -1,9 +1,11 @@
-
 import 'dart:async';
+import 'dart:io';
 
+import 'package:configuration/utility/style/style.dart';
+import 'package:configuration/environment/build_config.dart';
+import 'package:configuration/network/http_overrides.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_video_calls/di/injection/injection.dart';
 
 abstract class Env {
   Env() {
@@ -16,12 +18,12 @@ abstract class Env {
       await const MethodChannel('flavor')
           .invokeMethod<String>('getFlavor')
           .then((String? flavor) async {
-        // BuildConfig.init(flavor: flavor);
+        BuildConfig.init(flavor: flavor);
       }).catchError((error) {});
 
-      await Injection.inject();
-      // HttpOverrides.global = MyHttpOverrides();
-      // Style.styleDefault();
+      await onInjection();
+      HttpOverrides.global = MyHttpOverrides();
+      Style.styleDefault();
       final StatefulWidget app = await onCreate();
 
       runApp(app);
@@ -30,6 +32,8 @@ abstract class Env {
       print(stack);
     });
   }
+
+  Future? onInjection();
 
   FutureOr<StatefulWidget> onCreate();
 }

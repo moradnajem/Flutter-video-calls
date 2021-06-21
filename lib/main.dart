@@ -1,65 +1,54 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+import 'package:configuration/environment/env.dart';
+import 'package:configuration/generated/l10n.dart';
+import 'package:configuration/route/route_define.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_video_calls/di/injection/injection.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_video_calls/manifest.dart';
+import 'package:flutter_video_calls/views/introduction/introduction_route.dart';
+
+/// EndPoint default
+void main() => Main();
+
+class Main extends Env {
+  @override
+  FutureOr<StatefulWidget> onCreate() {
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      Zone.current.handleUncaughtError(details.exception, details.stack!);
+      return Container(color: Colors.transparent);
+    };
+
+    return Application();
+  }
+
+  @override
+  Future? onInjection() async {
+    await Injection.inject();
+  }
 }
 
-class MyApp extends StatelessWidget {
+class Application extends StatefulWidget {
+  @override
+  _ApplicationState createState() => _ApplicationState();
+}
+
+class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      title: 'flutter architecture',
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        S.delegate,
+      ],
+      locale: const Locale('en'),
+      supportedLocales: S.delegate.supportedLocales,
+      initialRoute: IntroductionRoute.ID,
+      onGenerateRoute: (settings) => manifest(generateRoutes, settings),
     );
   }
 }
