@@ -1,13 +1,19 @@
 part of style;
 
 final Color mColorPrimary = HexColor.fromHex("#325A00");
-final Color mColorPrimaryLight = HexColor.fromHex("#53BD7B");
+final Color mColorPrimaryLight = HexColor.fromHex("#228B22");
+
 const Color mColorNavigationBar = Colors.black;
 const Color mColorBackground = Colors.white;
 final Color mColorStatusColor = HexColor.fromHex('#33354E');
+
 final Color mColorScrim = HexColor.fromHex('#42000000');
 final Color mColorPrimaryScrim = HexColor.fromHex("#FF325A00");
+
 final Color mColorTextSecondary = HexColor.fromHex("#616570");
+final Color mColorTextHint = HexColor.fromHex("#C6C6C6");
+final Color mColorBlack = HexColor.fromHex("#000000");
+final Color mDarkOrange = HexColor.fromHex("#FF8C00");
 
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".

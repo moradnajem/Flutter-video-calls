@@ -7,11 +7,3 @@ class Utils {
     });
   }
 }
-
-// Map<String, double> ratios = {
-//   '1:1': 1 / 1,
-//   '9:16': 9 / 16,
-//   '3:4': 3 / 4,
-//   '9:21': 9 / 21,
-//   'full': MediaQuery.of(context).size.aspectRatio,
-// };

@@ -1,4 +1,4 @@
-part of 'introduction_cubit.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class IntroductionState {}

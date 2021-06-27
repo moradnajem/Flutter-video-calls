@@ -1,4 +1,12 @@
 {
+  "@@locale": "vi",
+  "app_name": "OKILA",
+  "app_description": "Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới",
   "login": "Đăng nhập",
-  "orRegisterNow": "Hoặc đang ký ngay"
+  "orRegisterNow": "Hoặc đang ký ngay",
+  "register": "Đăng ký",
+  "whatIsPhoneNumber": "Chào mừng bạn! Số điện thoại của bạn là gì?",
+  "reasonProvidePhoneNumber": "Bạn sẽ cần số điện thoại để xác thực thông tin và đăng nhập vào ứng dụng.",
+  "next": "Tiếp",
+  "findDialCode": "Tìm mã vùng"
 }

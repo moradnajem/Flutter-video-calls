@@ -21,8 +21,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "app_description": MessageLookupByLibrary.simpleMessage(
+            "Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới"),
+        "app_name": MessageLookupByLibrary.simpleMessage("OKILA"),
+        "findDialCode": MessageLookupByLibrary.simpleMessage("Tìm mã vùng"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+        "next": MessageLookupByLibrary.simpleMessage("Tiếp"),
         "orRegisterNow":
-            MessageLookupByLibrary.simpleMessage("Hoặc đang ký ngay")
+            MessageLookupByLibrary.simpleMessage("Hoặc đang ký ngay"),
+        "reasonProvidePhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "Bạn sẽ cần số điện thoại để xác thực thông tin và đăng nhập vào ứng dụng."),
+        "register": MessageLookupByLibrary.simpleMessage("Đăng ký"),
+        "whatIsPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "Chào mừng bạn! Số điện thoại của bạn là gì?")
       };
 }

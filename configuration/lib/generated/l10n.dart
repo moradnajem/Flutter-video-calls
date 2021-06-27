@@ -50,6 +50,26 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `OKILA`
+  String get app_name {
+    return Intl.message(
+      'OKILA',
+      name: 'app_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới`
+  String get app_description {
+    return Intl.message(
+      'Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới',
+      name: 'app_description',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Đăng nhập`
   String get login {
     return Intl.message(
@@ -69,6 +89,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Đăng ký`
+  String get register {
+    return Intl.message(
+      'Đăng ký',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chào mừng bạn! Số điện thoại của bạn là gì?`
+  String get whatIsPhoneNumber {
+    return Intl.message(
+      'Chào mừng bạn! Số điện thoại của bạn là gì?',
+      name: 'whatIsPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bạn sẽ cần số điện thoại để xác thực thông tin và đăng nhập vào ứng dụng.`
+  String get reasonProvidePhoneNumber {
+    return Intl.message(
+      'Bạn sẽ cần số điện thoại để xác thực thông tin và đăng nhập vào ứng dụng.',
+      name: 'reasonProvidePhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tiếp`
+  String get next {
+    return Intl.message(
+      'Tiếp',
+      name: 'next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tìm mã vùng`
+  String get findDialCode {
+    return Intl.message(
+      'Tìm mã vùng',
+      name: 'findDialCode',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -77,7 +147,6 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'vi'),
-      Locale.fromSubtags(languageCode: 'en'),
     ];
   }
 

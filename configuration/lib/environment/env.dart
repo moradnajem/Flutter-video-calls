@@ -12,7 +12,7 @@ abstract class Env {
   }
 
   _init() {
-    runZoned(() async {
+    runZonedGuarded(() async {
       WidgetsFlutterBinding.ensureInitialized();
       await const MethodChannel('flavor')
           .invokeMethod<String>('getFlavor')
@@ -25,8 +25,8 @@ abstract class Env {
       final StatefulWidget app = await onCreate();
 
       runApp(app);
-    }, onError: (Object obj, StackTrace stack) {
-      print(obj);
+    }, (error, stack) {
+      print(error);
       print(stack);
     });
   }

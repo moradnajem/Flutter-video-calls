@@ -8,7 +8,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers['Accept'] = 'application/json';
+    options.headers['Content-Type'] = 'application/json';
     final session = SessionPref.getAccessToken();
     options.headers[ACCESS_TOKEN] = 'Bearer $session';
     super.onRequest(options, handler);

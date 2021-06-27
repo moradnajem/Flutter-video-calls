@@ -1,15 +1,19 @@
 import 'package:configuration/di/di_module.dart';
 import 'package:configuration/environment/build_config.dart';
 import 'package:configuration/network/interceptor/auth_interceptor.dart';
+import 'package:configuration/network/interceptor/data_format_interceptor.dart';
 import 'package:configuration/network/interceptor/token_interceptor.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter_video_calls/data/verify/verify_api.dart';
 
 class ApiModule extends DIModule {
   @override
   provides() async {
     final dio = await setup();
     getIt.registerSingleton(dio);
+    // register api
+    getIt.registerSingleton(VerifyApi(dio, baseUrl: dio.options.baseUrl));
   }
 
   static FutureOr<Dio> setup() async {
@@ -27,8 +31,10 @@ class ApiModule extends DIModule {
     /// Unified add authentication request header
     dio.interceptors.add(AuthInterceptor());
 
-    /// Adapt data (according to your own data structure, you can choose to add it)
-    dio.interceptors.add(TokenInterceptor());
+    // dio.interceptors.add(TokenInterceptor());
+    //
+    // /// Adapt data (according to your own data structure, you can choose to add it)
+    // dio.interceptors.add(DataFormatInterceptor());
 
     /// Print Log (production mode removal)
     if (BuildConfig.get()?.flavor != null &&
