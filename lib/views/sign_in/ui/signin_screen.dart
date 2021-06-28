@@ -1,6 +1,5 @@
 import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
-import 'package:configuration/utility/logging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/views/sign_in/controllers/sign_in_x.dart';
