@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   flutter_localizations:
     sdk: flutter
   configuration:
@@ -39,10 +41,10 @@ flutter:
     - assets/images/
     - assets/flags/
     - assets/fonts/
-  fonts:
-    - family: Quicksand
-      fonts:
-        - asset: assets/fonts/Quicksand-Regular.ttf
-    - family: Lato
-      fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
+#  fonts:
+#    - family: Quicksand
+#      fonts:
+#        - asset: assets/fonts/Quicksand-Regular.ttf
+#    - family: Lato
+#      fonts:
+#        - asset: assets/fonts/Lato-Regular.ttf

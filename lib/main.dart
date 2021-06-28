@@ -29,9 +29,10 @@ class Main extends Env {
 
     // Fetch the available cameras before initializing the app.
     try {
+
       cameras = await availableCameras();
-    } on CameraException catch (e) {
-      Log.info(e.code, e.description);
+    } on Exception catch (e) {
+      Log.warning("cameras",e.toString());
     }
 
     CountryRepository.getCountriesData();

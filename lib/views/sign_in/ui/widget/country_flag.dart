@@ -11,7 +11,7 @@ class CountryFlag extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final country = await showCountrySelectorDialog(context);
+        final country = await showCountrySelectorDialog();
         _controller.country.value = country;
       },
       child: Row(
@@ -35,15 +35,13 @@ class CountryFlag extends StatelessWidget {
     );
   }
 
-  Future<Country?> showCountrySelectorDialog(BuildContext context) =>
-      showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) => AlertDialog(
+  Future<Country?> showCountrySelectorDialog() => Get.dialog(
+        AlertDialog(
           content: Container(
             width: double.maxFinite,
             child: CountrySearchList(),
           ),
         ),
+        barrierDismissible: false,
       );
 }

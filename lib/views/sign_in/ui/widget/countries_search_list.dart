@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 /// Creates a list of Countries with a search textfield.
 class CountrySearchList extends StatefulWidget {
-
   @override
   _CountrySearchListState createState() => _CountrySearchListState();
 }
@@ -56,8 +55,10 @@ class _CountrySearchListState extends State<CountrySearchList> {
   /// Returns the country name of a [Country]. if the locale is set and translation in available.
   /// returns the translated name.
   String? getCountryName(Country country) {
-    if (_controller.country.value?.alpha2Code != null && country.nameTranslations != null) {
-      String? translated = country.nameTranslations![_controller.country.value?.alpha2Code!];
+    if (_controller.country.value?.alpha2Code != null &&
+        country.nameTranslations != null) {
+      String? translated =
+          country.nameTranslations![_controller.country.value?.alpha2Code!];
       if (translated != null && translated.isNotEmpty) {
         return translated;
       }
@@ -77,9 +78,7 @@ class _CountrySearchListState extends State<CountrySearchList> {
             autofocus: false,
             onChanged: (value) =>
                 setState(() => filteredCountries = filterCountries()),
-            decoration: InputDecoration(
-              hintText: S.current.findDialCode
-            ),
+            decoration: InputDecoration(hintText: S.current.find_dial_code),
           ),
         ),
         Flexible(
@@ -99,7 +98,7 @@ class _CountrySearchListState extends State<CountrySearchList> {
                     child: Text('${country.dialCode ?? ''}',
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.start)),
-                onTap: () => Navigator.of(context).pop(country),
+                onTap: () => Get.back(result: country),
               );
             },
           ),

@@ -3,7 +3,6 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/main.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
-import 'package:flutter_video_calls/views/sign_up/sign_up_route.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
 import 'package:ui/style/style.dart';
@@ -119,9 +118,9 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                 ),
                 ButtonRadius(
                   height: 55.0,
-                  label: S.current.orRegisterNow,
+                  label: S.current.or_register_now,
                   callback: () {
-                    Get.toNamed(SignUpRoute.ID);
+                    Get.toNamed(SignInRoute.ID);
                   },
                 ),
                 SizedBox(

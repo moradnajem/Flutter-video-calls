@@ -31,10 +31,10 @@ class ApiModule extends DIModule {
     /// Unified add authentication request header
     dio.interceptors.add(AuthInterceptor());
 
-    // dio.interceptors.add(TokenInterceptor());
+    dio.interceptors.add(TokenInterceptor());
     //
     // /// Adapt data (according to your own data structure, you can choose to add it)
-    // dio.interceptors.add(DataFormatInterceptor());
+    dio.interceptors.add(DataFormatInterceptor());
 
     /// Print Log (production mode removal)
     if (BuildConfig.get()?.flavor != null &&

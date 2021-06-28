@@ -16,8 +16,8 @@ class BuildConfig {
 
   const BuildConfig._development()
       : this._(
-          baseUrl: 'http://192.168.0.105:8762/api/',
-          socketUrl: 'http://192.168.0.105:8762/api/',
+          baseUrl: 'https://mighty-lion-89.loca.lt/api/',
+          socketUrl: 'https://mighty-lion-89.loca.lt/api/',
           connectTimeout: 5000,
           receiveTimeout: 5000,
           flavor: Flavor.DEVELOPMENT,
