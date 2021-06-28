@@ -63,7 +63,7 @@ class ApiException {
               errorMessage = errorBody.code == ResponseCode.UNAUTHORIZED ||
                       errorBody.code == ResponseCode.FORBIDDEN
                   ? S.current.invalid_credentials
-                  : ResponseCode.listCode[errorBody.code] ?? errorBody.error;
+                  : errorBody.code?.message ?? errorBody.error;
 
               errorCode = errorBody.code;
             }

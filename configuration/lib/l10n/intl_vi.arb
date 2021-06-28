@@ -10,6 +10,13 @@
   "next": "Tiếp",
   "close": "Đóng",
   "find_dial_code": "Tìm mã vùng",
+  "enter_verify_code": "Nhập mã gồm 6 chữ số đã gửi tới",
+  "have_not_received_verify_code": "Chưa nhận được mã?",
+  "request_new_code_in_seconds": "Yêu cầu gửi mã mới trong {seconds}",
+  "request_new_code": "Yêu cầu gửi mã mới",
+  "request": "Gửi yêu cầu",
+  "requested_new_code": "Yêu cầu gửi mã mới thành công!",
+
   "invalid_credentials": "Invalid credentials",
   "cancelled": "Cancelled",
   "connect_timeout": "Connect timeout",
@@ -24,7 +31,7 @@
   "code_500": "Thất bại.",
   "code_401": "Cần đăng nhập.",
   "code_403": "Cần đăng nhập.",
-  "code_404": "Không tìm thấy.",
+  "code_404": "Máy chủ đang bận vui lòng quay lại sau.",
   "code_417": "Expectation failed.",
   "code_1000": "Lỗi không xác định.",
   "code_1001": "Email hoặc mật khẩu không đúng.",
@@ -45,7 +52,7 @@
   "code_1016": "Định dạng email không đúng.",
   "code_1017": "Không tìm thấy người dùng này.",
   "code_1018": "Dữ liệu không đúng.",
-  "code_1019": "Mã PIN đã hết hạn.",
-  "code_1020": "Mã PIN không đúng.",
+  "code_1019": "Mã hết hạn.",
+  "code_1020": "Mã không đúng.",
   "code_1021": "Nhậm sai quá số lần cho phép."
 }

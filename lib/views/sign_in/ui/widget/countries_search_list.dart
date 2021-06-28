@@ -2,7 +2,7 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
 import 'package:flutter_video_calls/data/country/repositories/country_repository.dart';
-import 'package:flutter_video_calls/views/sign_in/controllers/sign_in_x.dart';
+import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
 import 'package:get/get.dart';
 
 /// Creates a list of Countries with a search textfield.
@@ -12,7 +12,7 @@ class CountrySearchList extends StatefulWidget {
 }
 
 class _CountrySearchListState extends State<CountrySearchList> {
-  final SignInController _controller = Get.find();
+  final VerifyController _verifyController = Get.find();
 
   TextEditingController _searchController = TextEditingController();
   late List<Country> filteredCountries;
@@ -44,7 +44,7 @@ class _CountrySearchListState extends State<CountrySearchList> {
                 getCountryName(country)!
                     .toLowerCase()
                     .contains(value.toLowerCase()) ||
-                country.dialCode!.contains(value.toLowerCase()),
+                country.dialCode.contains(value.toLowerCase()),
           )
           .toList();
     }
@@ -55,10 +55,9 @@ class _CountrySearchListState extends State<CountrySearchList> {
   /// Returns the country name of a [Country]. if the locale is set and translation in available.
   /// returns the translated name.
   String? getCountryName(Country country) {
-    if (_controller.country.value?.alpha2Code != null &&
-        country.nameTranslations != null) {
+    if (country.nameTranslations != null) {
       String? translated =
-          country.nameTranslations![_controller.country.value?.alpha2Code!];
+          country.nameTranslations![_verifyController.country.value.alpha2Code];
       if (translated != null && translated.isNotEmpty) {
         return translated;
       }
@@ -95,7 +94,7 @@ class _CountrySearchListState extends State<CountrySearchList> {
                         textAlign: TextAlign.start)),
                 subtitle: Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: Text('${country.dialCode ?? ''}',
+                    child: Text('${country.dialCode}',
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.start)),
                 onTap: () => Get.back(result: country),

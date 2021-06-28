@@ -19,6 +19,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
+  static String m0(seconds) => "Yêu cầu gửi mã mới trong ${seconds}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "app_description": MessageLookupByLibrary.simpleMessage(
@@ -63,21 +65,26 @@ class MessageLookup extends MessageLookupByLibrary {
             "Không tìm thấy người dùng này."),
         "code_1018":
             MessageLookupByLibrary.simpleMessage("Dữ liệu không đúng."),
-        "code_1019": MessageLookupByLibrary.simpleMessage("Mã PIN đã hết hạn."),
-        "code_1020": MessageLookupByLibrary.simpleMessage("Mã PIN không đúng."),
+        "code_1019": MessageLookupByLibrary.simpleMessage("Mã hết hạn."),
+        "code_1020": MessageLookupByLibrary.simpleMessage("Mã không đúng."),
         "code_1021": MessageLookupByLibrary.simpleMessage(
             "Nhậm sai quá số lần cho phép."),
         "code_200": MessageLookupByLibrary.simpleMessage("Thành công."),
         "code_401": MessageLookupByLibrary.simpleMessage("Cần đăng nhập."),
         "code_403": MessageLookupByLibrary.simpleMessage("Cần đăng nhập."),
-        "code_404": MessageLookupByLibrary.simpleMessage("Không tìm thấy."),
+        "code_404": MessageLookupByLibrary.simpleMessage(
+            "Máy chủ đang bận vui lòng quay lại sau."),
         "code_417": MessageLookupByLibrary.simpleMessage("Expectation failed."),
         "code_500": MessageLookupByLibrary.simpleMessage("Thất bại."),
         "connect_timeout":
             MessageLookupByLibrary.simpleMessage("Connect timeout"),
         "connection_problem": MessageLookupByLibrary.simpleMessage(
             "There are some problems with the connection. Please try again"),
+        "enter_verify_code": MessageLookupByLibrary.simpleMessage(
+            "Nhập mã gồm 6 chữ số đã gửi tới"),
         "find_dial_code": MessageLookupByLibrary.simpleMessage("Tìm mã vùng"),
+        "have_not_received_verify_code":
+            MessageLookupByLibrary.simpleMessage("Chưa nhận được mã?"),
         "invalid_credentials":
             MessageLookupByLibrary.simpleMessage("Invalid credentials"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
@@ -92,6 +99,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "receive_timeout":
             MessageLookupByLibrary.simpleMessage("Receive timeout"),
         "register": MessageLookupByLibrary.simpleMessage("Đăng ký"),
+        "request": MessageLookupByLibrary.simpleMessage("Gửi yêu cầu"),
+        "request_new_code":
+            MessageLookupByLibrary.simpleMessage("Yêu cầu gửi mã mới"),
+        "request_new_code_in_seconds": m0,
+        "requested_new_code": MessageLookupByLibrary.simpleMessage(
+            "Yêu cầu gửi mã mới thành công!"),
         "send_timeout": MessageLookupByLibrary.simpleMessage("Send timeout"),
         "server_error": MessageLookupByLibrary.simpleMessage("Lỗi."),
         "server_unknown_error": MessageLookupByLibrary.simpleMessage(

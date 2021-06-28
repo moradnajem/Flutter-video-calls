@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_video_calls/main.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
@@ -22,42 +21,42 @@ class _IntroductionScreenState extends State<IntroductionScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    onNewCameraSelected();
+    // onNewCameraSelected();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      onNewCameraSelected();
+      // onNewCameraSelected();
     } else if (state == AppLifecycleState.paused) {
       controller?.dispose();
     }
   }
 
-  void onNewCameraSelected() async {
-    if (controller != null) await controller?.dispose();
-
-    controller = CameraController(
-        cameras[cameras.length > 0 ? 1 : 0], ResolutionPreset.max);
-    controller?.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
-  }
+  // void onNewCameraSelected() async {
+  //   if (controller != null) await controller?.dispose();
+  //
+  //   controller = CameraController(
+  //       cameras[cameras.length > 0 ? 1 : 0], ResolutionPreset.max);
+  //   controller?.initialize().then((_) {
+  //     if (!mounted) {
+  //       return;
+  //     }
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    if (controller == null || controller?.value.isInitialized == false) {
-      return Container();
-    }
+    // if (controller == null || controller?.value.isInitialized == false) {
+    //   return Container();
+    // }
 
     return Scaffold(
       body: Stack(
         children: [
           // camera
-          CameraPreview(controller!),
+          // CameraPreview(controller!),
           // Scrim
           Opacity(
             opacity: 0.8,

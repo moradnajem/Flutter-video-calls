@@ -2,7 +2,7 @@ import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_video_calls/views/sign_in/controllers/sign_in_x.dart';
+import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
 import 'package:flutter_video_calls/views/sign_in/ui/widget/country_flag.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
@@ -16,7 +16,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _signInController = getIt.get<SignInController>();
+  final _verifyController = getIt.get<VerifyController>();
 
   @override
   void initState() {
@@ -102,7 +102,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: TextFormField(
                   autofocus: false,
                   onChanged: (value) {
-                    _signInController.phoneNumber.value = value;
+                    _verifyController.phoneNumber.value = value;
                   },
                   validator: (value) {
                     if (value?.isEmpty == true) {
@@ -139,9 +139,9 @@ class _SignInScreenState extends State<SignInScreen> {
             label: S.current.next,
             background: mColorPrimary,
             textColor: Colors.white,
-            enable: _signInController.phoneNumberIsCorrect(),
+            enable: _verifyController.phoneNumberIsCorrect(),
             callback: () {
-              _signInController.requestProvideVerifyCode();
+              _verifyController.requestProvideVerifyCode();
             },
           ),
         ),

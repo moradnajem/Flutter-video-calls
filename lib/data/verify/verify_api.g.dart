@@ -14,19 +14,38 @@ class _VerifyApi implements VerifyApi {
   String? baseUrl;
 
   @override
-  Future<BaseResponse?>? getVerifyCode(request) async {
+  Future<BaseResponse<dynamic>?>? getVerifyCode(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse<dynamic>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, 'auth//getVerifyCode',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value =
-        _result.data == null ? null : BaseResponse.fromJson(_result.data!);
+    final value = _result.data == null
+        ? null
+        : BaseResponse<dynamic>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse<dynamic>?>? verifyCode(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'auth//verify',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data == null
+        ? null
+        : BaseResponse<dynamic>.fromJson(_result.data!);
     return value;
   }
 

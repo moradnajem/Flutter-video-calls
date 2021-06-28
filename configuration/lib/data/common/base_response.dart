@@ -1,6 +1,6 @@
 import 'package:configuration/data/common/response_code.dart';
 
-class BaseResponse {
+class BaseResponse<T> {
   String? timestamp;
   int? code;
   String? message;
@@ -11,8 +11,7 @@ class BaseResponse {
 
   BaseResponse.fromJson(Map<String, dynamic> json) {
     code = json['code'] ?? ResponseCode.SERVER_UNKNOWN_ERROR;
-    message = json['message'] ??
-        ResponseCode.listCode[ResponseCode.SERVER_UNKNOWN_ERROR];
+    message = json['message'] ?? ResponseCode.SERVER_UNKNOWN_ERROR.message;
     error = json['error'] ?? "";
     token = json['token'] ?? "";
   }

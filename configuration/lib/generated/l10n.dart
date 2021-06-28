@@ -150,6 +150,66 @@ class S {
     );
   }
 
+  /// `Nhập mã gồm 6 chữ số đã gửi tới`
+  String get enter_verify_code {
+    return Intl.message(
+      'Nhập mã gồm 6 chữ số đã gửi tới',
+      name: 'enter_verify_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chưa nhận được mã?`
+  String get have_not_received_verify_code {
+    return Intl.message(
+      'Chưa nhận được mã?',
+      name: 'have_not_received_verify_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yêu cầu gửi mã mới trong {seconds}`
+  String request_new_code_in_seconds(Object seconds) {
+    return Intl.message(
+      'Yêu cầu gửi mã mới trong $seconds',
+      name: 'request_new_code_in_seconds',
+      desc: '',
+      args: [seconds],
+    );
+  }
+
+  /// `Yêu cầu gửi mã mới`
+  String get request_new_code {
+    return Intl.message(
+      'Yêu cầu gửi mã mới',
+      name: 'request_new_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gửi yêu cầu`
+  String get request {
+    return Intl.message(
+      'Gửi yêu cầu',
+      name: 'request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yêu cầu gửi mã mới thành công!`
+  String get requested_new_code {
+    return Intl.message(
+      'Yêu cầu gửi mã mới thành công!',
+      name: 'requested_new_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Invalid credentials`
   String get invalid_credentials {
     return Intl.message(
@@ -290,10 +350,10 @@ class S {
     );
   }
 
-  /// `Không tìm thấy.`
+  /// `Máy chủ đang bận vui lòng quay lại sau.`
   String get code_404 {
     return Intl.message(
-      'Không tìm thấy.',
+      'Máy chủ đang bận vui lòng quay lại sau.',
       name: 'code_404',
       desc: '',
       args: [],
@@ -500,20 +560,20 @@ class S {
     );
   }
 
-  /// `Mã PIN đã hết hạn.`
+  /// `Mã hết hạn.`
   String get code_1019 {
     return Intl.message(
-      'Mã PIN đã hết hạn.',
+      'Mã hết hạn.',
       name: 'code_1019',
       desc: '',
       args: [],
     );
   }
 
-  /// `Mã PIN không đúng.`
+  /// `Mã không đúng.`
   String get code_1020 {
     return Intl.message(
-      'Mã PIN không đúng.',
+      'Mã không đúng.',
       name: 'code_1020',
       desc: '',
       args: [],
