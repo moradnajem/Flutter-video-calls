@@ -22,16 +22,16 @@ class _IntroductionScreenState extends State<IntroductionScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    // onNewCameraSelected();
+    onNewCameraSelected();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // if (state == AppLifecycleState.resumed) {
-    //   onNewCameraSelected();
-    // } else if (state == AppLifecycleState.paused) {
-    //   controller?.dispose();
-    // }
+    if (state == AppLifecycleState.resumed) {
+      onNewCameraSelected();
+    } else if (state == AppLifecycleState.paused) {
+      controller?.dispose();
+    }
   }
 
   void onNewCameraSelected() async {
@@ -49,15 +49,15 @@ class _IntroductionScreenState extends State<IntroductionScreen>
 
   @override
   Widget build(BuildContext context) {
-    // if (controller == null || controller?.value.isInitialized == false) {
-    //   return Container();
-    // }
+    if (controller == null || controller?.value.isInitialized == false) {
+      return Container();
+    }
 
     return Scaffold(
       body: Stack(
         children: [
           // camera
-          // CameraPreview(controller!),
+          CameraPreview(controller!),
           // Scrim
           Opacity(
             opacity: 0.8,

@@ -60,10 +60,10 @@ class S {
     );
   }
 
-  /// `Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới`
+  /// `Ứng dụng gọi video trực tuyến hoàn toàn miến phí`
   String get app_description {
     return Intl.message(
-      'Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới',
+      'Ứng dụng gọi video trực tuyến hoàn toàn miến phí',
       name: 'app_description',
       desc: '',
       args: [],

@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "app_description": MessageLookupByLibrary.simpleMessage(
-            "Luyện giao tiếp tiếng anh trực tuyến cùng với bạn bè quanh thế giới"),
+            "Ứng dụng gọi video trực tuyến hoàn toàn miến phí"),
         "app_name": MessageLookupByLibrary.simpleMessage("OKILA"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "close": MessageLookupByLibrary.simpleMessage("Đóng"),
