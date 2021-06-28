@@ -29,6 +29,4 @@ npm run generate
 - More info [here](https://github.com/Arkweid/lefthook/blob/master/docs/node.md).
 
 
-![image](./screenshots/introduction.png)
-
-![image](./screenshots/get_verify_code.png)
+<img height="500px" src = "./screenshots/introduction.png" alt ="Loading"> <img height="500px" src = "./screenshots/get_verify_code.png" alt ="Loading">
