@@ -2,6 +2,7 @@ import 'package:configuration/data/common/base_response.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_video_calls/data/verify/model/get_verify_code_request.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_code_request.dart';
+import 'package:flutter_video_calls/data/verify/model/verify_code_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'verify_api.g.dart';
@@ -14,5 +15,5 @@ abstract class VerifyApi {
   Future<BaseResponse?>? getVerifyCode(@Body() GetVerifyCodeRequest request);
 
   @POST('auth//verify')
-  Future<BaseResponse?>? verifyCode(@Body() VerifyCodeRequest request);
+  Future<VerifyCodeResponse?>? verifyCode(@Body() VerifyCodeRequest request);
 }

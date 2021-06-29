@@ -210,6 +210,16 @@ class S {
     );
   }
 
+  /// `Mã không đúng. Bạn có thể thử thêm {incorrectCount} lần nữa.`
+  String enters_code_incorrect(Object incorrectCount) {
+    return Intl.message(
+      'Mã không đúng. Bạn có thể thử thêm $incorrectCount lần nữa.',
+      name: 'enters_code_incorrect',
+      desc: '',
+      args: [incorrectCount],
+    );
+  }
+
   /// `Invalid credentials`
   String get invalid_credentials {
     return Intl.message(
@@ -230,40 +240,40 @@ class S {
     );
   }
 
-  /// `Connect timeout`
+  /// `Thời gian kết nối kéo dài. Vui lòng thử lại`
   String get connect_timeout {
     return Intl.message(
-      'Connect timeout',
+      'Thời gian kết nối kéo dài. Vui lòng thử lại',
       name: 'connect_timeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Receive timeout`
+  /// `Thời gian kết nối kéo dài. Vui lòng thử lại`
   String get receive_timeout {
     return Intl.message(
-      'Receive timeout',
+      'Thời gian kết nối kéo dài. Vui lòng thử lại',
       name: 'receive_timeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Send timeout`
+  /// `Thời gian kết nối kéo dài. Vui lòng thử lại`
   String get send_timeout {
     return Intl.message(
-      'Send timeout',
+      'Thời gian kết nối kéo dài. Vui lòng thử lại',
       name: 'send_timeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `There are some problems with the connection. Please try again`
+  /// `Có một số vấn đề với kết nối. Vui lòng thử lại`
   String get connection_problem {
     return Intl.message(
-      'There are some problems with the connection. Please try again',
+      'Có một số vấn đề với kết nối. Vui lòng thử lại',
       name: 'connection_problem',
       desc: '',
       args: [],
@@ -300,10 +310,10 @@ class S {
     );
   }
 
-  /// `Lỗi không kết nối được với máy chủ, vui lòng quay lại sau.`
+  /// `Lỗi không kết nối được với máy chủ. Vui lòng quay lại sau.`
   String get server_unknown_error {
     return Intl.message(
-      'Lỗi không kết nối được với máy chủ, vui lòng quay lại sau.',
+      'Lỗi không kết nối được với máy chủ. Vui lòng quay lại sau.',
       name: 'server_unknown_error',
       desc: '',
       args: [],
@@ -350,10 +360,10 @@ class S {
     );
   }
 
-  /// `Máy chủ đang bận vui lòng quay lại sau.`
+  /// `Máy chủ đang bận. Vui lòng quay lại sau.`
   String get code_404 {
     return Intl.message(
-      'Máy chủ đang bận vui lòng quay lại sau.',
+      'Máy chủ đang bận. Vui lòng quay lại sau.',
       name: 'code_404',
       desc: '',
       args: [],

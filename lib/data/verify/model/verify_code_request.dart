@@ -1,3 +1,4 @@
+import 'package:flutter_video_calls/data/user/model/role.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -7,15 +8,16 @@ part 'verify_code_request.g.dart';
 class VerifyCodeRequest {
   VerifyCodeRequest({
     this.email,
-    this.phoneNumber,
-    this.dialCode,
-    this.alpha2Code,
+    required this.phoneNumber,
+    required this.dialCode,
+    required this.alpha2Code,
     this.alpha3Code,
-    this.type,
-    this.verifyCode,
+    required this.type,
+    required this.verifyCode,
     this.deviceName,
     this.deviceId,
-    this.platform,
+    required this.platform,
+    required this.role,
   });
 
   @JsonKey(name: 'email')
@@ -39,6 +41,8 @@ class VerifyCodeRequest {
   String? deviceId;
   @JsonKey(name: 'platform')
   String? platform;
+  @JsonKey(name: 'role')
+  Role? role;
 
   factory VerifyCodeRequest.fromJson(Map<String, dynamic> json) =>
       _$VerifyCodeRequestFromJson(json);

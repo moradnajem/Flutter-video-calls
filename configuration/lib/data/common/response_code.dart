@@ -11,10 +11,10 @@ class ResponseCode {
   // Error
   static const SERVER_UNKNOWN_ERROR = 1000;
 
-  static const EMAIL_PASSWORD_NOT_CORRECT = 1001;
-  static const SOCIAL_PASSWORD_NOT_CORRECT = 1002;
+  static const EMAIL_PASSWORD_INCORRECT = 1001;
+  static const SOCIAL_PASSWORD_INCORRECT = 1002;
 
-  static const PHONE_NUMBER_PASSWORD_NOT_CORRECT = 1003;
+  static const PHONE_NUMBER_PASSWORD_INCORRECT = 1003;
 
   static const PASSWORD_IS_NULL_BLANK = 1004;
   static const EMAIL_IS_NULL_BLANK = 1005;
@@ -25,7 +25,7 @@ class ResponseCode {
   static const PHONE_NUMBER_IS_NULL_BLANK = 1008;
   static const PHONE_NUMBER_IS_EXISTS = 1009;
 
-  static const CODE_NOT_CORRECT = 1010;
+  static const STAFF_CODE_IS_NULL_BLANK = 1010;
 
   static const FILE_TOO_LARGE = 1011;
 
@@ -45,7 +45,7 @@ class ResponseCode {
 
   static const VERIFY_CODE_EXPIRE = 1019;
 
-  static const VERIFY_CODE_NOT_CORRECT = 1020;
+  static const VERIFY_CODE_INCORRECT = 1020;
 
   static const WRONG_TOO_MANY_TIME = 1021;
 }
@@ -65,10 +65,10 @@ extension messageResponse on int {
     // Error
     ResponseCode.SERVER_UNKNOWN_ERROR: S.current.code_1000,
 
-    ResponseCode.EMAIL_PASSWORD_NOT_CORRECT: S.current.code_1001,
-    ResponseCode.SOCIAL_PASSWORD_NOT_CORRECT: S.current.code_1002,
+    ResponseCode.EMAIL_PASSWORD_INCORRECT: S.current.code_1001,
+    ResponseCode.SOCIAL_PASSWORD_INCORRECT: S.current.code_1002,
 
-    ResponseCode.PHONE_NUMBER_PASSWORD_NOT_CORRECT: S.current.code_1003,
+    ResponseCode.PHONE_NUMBER_PASSWORD_INCORRECT: S.current.code_1003,
 
     ResponseCode.PASSWORD_IS_NULL_BLANK: S.current.code_1004,
     ResponseCode.EMAIL_IS_NULL_BLANK: S.current.code_1005,
@@ -79,7 +79,7 @@ extension messageResponse on int {
     ResponseCode.PHONE_NUMBER_IS_NULL_BLANK: S.current.code_1008,
     ResponseCode.PHONE_NUMBER_IS_EXISTS: S.current.code_1009,
 
-    ResponseCode.CODE_NOT_CORRECT: S.current.code_1010,
+    ResponseCode.STAFF_CODE_IS_NULL_BLANK: S.current.code_1010,
 
     ResponseCode.FILE_TOO_LARGE: S.current.code_1011,
 
@@ -99,7 +99,7 @@ extension messageResponse on int {
 
     ResponseCode.VERIFY_CODE_EXPIRE: S.current.code_1019,
 
-    ResponseCode.VERIFY_CODE_NOT_CORRECT: S.current.code_1020,
+    ResponseCode.VERIFY_CODE_INCORRECT: S.current.code_1020,
 
     ResponseCode.WRONG_TOO_MANY_TIME: S.current.code_1021,
   };

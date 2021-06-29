@@ -19,7 +19,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static String m0(seconds) => "Yêu cầu gửi mã mới trong ${seconds}";
+  static String m0(incorrectCount) =>
+      "Mã không đúng. Bạn có thể thử thêm ${incorrectCount} lần nữa.";
+
+  static String m1(seconds) => "Yêu cầu gửi mã mới trong ${seconds}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -73,15 +76,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "code_401": MessageLookupByLibrary.simpleMessage("Cần đăng nhập."),
         "code_403": MessageLookupByLibrary.simpleMessage("Cần đăng nhập."),
         "code_404": MessageLookupByLibrary.simpleMessage(
-            "Máy chủ đang bận vui lòng quay lại sau."),
+            "Máy chủ đang bận. Vui lòng quay lại sau."),
         "code_417": MessageLookupByLibrary.simpleMessage("Expectation failed."),
         "code_500": MessageLookupByLibrary.simpleMessage("Thất bại."),
-        "connect_timeout":
-            MessageLookupByLibrary.simpleMessage("Connect timeout"),
+        "connect_timeout": MessageLookupByLibrary.simpleMessage(
+            "Thời gian kết nối kéo dài. Vui lòng thử lại"),
         "connection_problem": MessageLookupByLibrary.simpleMessage(
-            "There are some problems with the connection. Please try again"),
+            "Có một số vấn đề với kết nối. Vui lòng thử lại"),
         "enter_verify_code": MessageLookupByLibrary.simpleMessage(
             "Nhập mã gồm 6 chữ số đã gửi tới"),
+        "enters_code_incorrect": m0,
         "find_dial_code": MessageLookupByLibrary.simpleMessage("Tìm mã vùng"),
         "have_not_received_verify_code":
             MessageLookupByLibrary.simpleMessage("Chưa nhận được mã?"),
@@ -96,19 +100,20 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Làm ơn kiểm tra kết nối mạng."),
         "reason_provide_phone_number": MessageLookupByLibrary.simpleMessage(
             "Bạn sẽ cần số điện thoại để xác thực thông tin và đăng nhập vào ứng dụng."),
-        "receive_timeout":
-            MessageLookupByLibrary.simpleMessage("Receive timeout"),
+        "receive_timeout": MessageLookupByLibrary.simpleMessage(
+            "Thời gian kết nối kéo dài. Vui lòng thử lại"),
         "register": MessageLookupByLibrary.simpleMessage("Đăng ký"),
         "request": MessageLookupByLibrary.simpleMessage("Gửi yêu cầu"),
         "request_new_code":
             MessageLookupByLibrary.simpleMessage("Yêu cầu gửi mã mới"),
-        "request_new_code_in_seconds": m0,
+        "request_new_code_in_seconds": m1,
         "requested_new_code": MessageLookupByLibrary.simpleMessage(
             "Yêu cầu gửi mã mới thành công!"),
-        "send_timeout": MessageLookupByLibrary.simpleMessage("Send timeout"),
+        "send_timeout": MessageLookupByLibrary.simpleMessage(
+            "Thời gian kết nối kéo dài. Vui lòng thử lại"),
         "server_error": MessageLookupByLibrary.simpleMessage("Lỗi."),
         "server_unknown_error": MessageLookupByLibrary.simpleMessage(
-            "Lỗi không kết nối được với máy chủ, vui lòng quay lại sau."),
+            "Lỗi không kết nối được với máy chủ. Vui lòng quay lại sau."),
         "unknown_error":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định."),
         "what_is_phone_number": MessageLookupByLibrary.simpleMessage(

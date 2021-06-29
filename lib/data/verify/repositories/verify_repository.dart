@@ -3,6 +3,7 @@ import 'package:configuration/data/common/base_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_video_calls/data/verify/model/get_verify_code_request.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_code_request.dart';
+import 'package:flutter_video_calls/data/verify/model/verify_code_response.dart';
 import 'package:flutter_video_calls/data/verify/verify_api.dart';
 
 class VerifyRepository {
@@ -21,7 +22,7 @@ class VerifyRepository {
     }
   }
 
-  Future<BaseResponse?> verifyCode(VerifyCodeRequest request) async {
+  Future<VerifyCodeResponse?> verifyCode(VerifyCodeRequest request) async {
     try {
       final response = await api?.verifyCode(request);
       return response;

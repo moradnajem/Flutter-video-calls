@@ -1,5 +1,1 @@
-enum VerifyType{
-  PHONE_NUMBER,
-  EMAIL,
-  PASSWORD
-}
+enum VerifyType { PHONE_NUMBER, EMAIL, PASSWORD }

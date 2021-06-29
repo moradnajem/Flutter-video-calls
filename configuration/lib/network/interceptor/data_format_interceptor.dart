@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 class DataFormatInterceptor extends InterceptorsWrapper {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
+    print("statusCode: ${response.statusCode}"
+        "\nresponse: ${response.data}");
     if (response.statusCode != 200) {
       final errorMap = response.data == '404' || response.data == 404
           ? <String, dynamic>{

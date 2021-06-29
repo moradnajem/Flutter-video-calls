@@ -18,6 +18,7 @@ VerifyCodeRequest _$VerifyCodeRequestFromJson(Map<String, dynamic> json) {
     deviceName: json['deviceName'] as String?,
     deviceId: json['deviceId'] as String?,
     platform: json['platform'] as String?,
+    role: _$enumDecodeNullable(_$RoleEnumMap, json['role']),
   );
 }
 
@@ -33,6 +34,7 @@ Map<String, dynamic> _$VerifyCodeRequestToJson(VerifyCodeRequest instance) =>
       'deviceName': instance.deviceName,
       'deviceId': instance.deviceId,
       'platform': instance.platform,
+      'role': _$RoleEnumMap[instance.role],
     };
 
 K _$enumDecode<K, V>(
@@ -76,4 +78,11 @@ const _$VerifyTypeEnumMap = {
   VerifyType.PHONE_NUMBER: 'PHONE_NUMBER',
   VerifyType.EMAIL: 'EMAIL',
   VerifyType.PASSWORD: 'PASSWORD',
+};
+
+const _$RoleEnumMap = {
+  Role.STAFF: 'STAFF',
+  Role.CUSTOMER: 'CUSTOMER',
+  Role.ADMIN: 'ADMIN',
+  Role.UNKNOWN: 'UNKNOWN',
 };

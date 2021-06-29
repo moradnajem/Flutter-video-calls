@@ -1,5 +1,6 @@
 import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
+import 'package:configuration/utility/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
@@ -13,12 +14,52 @@ class VerifyCodeScreen extends StatefulWidget {
   _VerifyCodeScreenState createState() => _VerifyCodeScreenState();
 }
 
-class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
+class _VerifyCodeScreenState extends State<VerifyCodeScreen>
+    with TickerProviderStateMixin {
   final _verifyController = getIt.get<VerifyController>();
+  TextEditingController _textFormController = TextEditingController();
+  late Animation<Duration> _animation;
+  AnimationController? _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+        duration:
+            Duration(seconds: _verifyController.codeExpireCountDown.value),
+        vsync: this);
+    _animation = Tween(
+            begin:
+                Duration(seconds: _verifyController.codeExpireCountDown.value),
+            end: Duration.zero)
+        .animate(_controller!)
+          ..addListener(() {
+            _verifyController.codeExpireCountDown.value =
+                _animation.value.inSeconds % 60;
+          });
+    _verifyController.codeExpireCountDown.stream.listen((value) {
+      if (value == 30) {
+        _controller?.forward(from: 0.0);
+      }
+    });
+    _verifyController.verifyIncorrectCount.stream.listen((value) {
+      _textFormController.clear();
+    });
+    _controller?.forward();
+    Utils.afterBuild(() {
+      _verifyController.phoneNumberWithAlpha2Code();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _controller = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _verifyController.phoneNumberWithAlpha2Code();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -48,62 +89,68 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     S.current.enter_verify_code,
                     style: TextStyle(color: mColorBlack, fontSize: 16),
                   ),
-                  Obx(
-                    () => Text(
-                      _verifyController.normalizedNumber.value,
-                      style: TextStyle(
-                          color: mColorBlack,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  ObxValue<RxString>(
+                      (normalizedNumber) => Text(
+                            normalizedNumber.value,
+                            style: TextStyle(
+                                color: mColorBlack,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                      _verifyController.normalizedNumber),
                   SizedBox(
                     height: mSpacing,
                   ),
                   _verifyCodeInput(),
+                  ObxValue<RxInt>(
+                    (verifyIncorrectCount) => Text(
+                      verifyIncorrectCount >= 3
+                          ? ""
+                          : S.current.enters_code_incorrect(
+                              verifyIncorrectCount.value),
+                      style: TextStyle(color: Colors.red, fontSize: 14),
+                    ),
+                    _verifyController.verifyIncorrectCount,
+                  )
                 ],
               ),
-              TweenAnimationBuilder<Duration>(
-                  duration: Duration(seconds: 30),
-                  tween:
-                      Tween(begin: Duration(seconds: 30), end: Duration.zero),
-                  builder:
-                      (BuildContext context, Duration value, Widget? child) {
-                    final seconds = value.inSeconds % 60;
-                    return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(S.current.have_not_received_verify_code,
-                                style: TextStyle(
-                                    color: mColorTextSecondary, fontSize: 16)),
-                            GestureDetector(
-                              onTap: () {
-                                if (seconds <= 0) {
-                                  _verifyController.requestProvideVerifyCode();
-                                }
-                              },
-                              child: Text(
-                                seconds > 0
-                                    ? S.current
-                                        .request_new_code_in_seconds(seconds)
-                                    : S.current.request_new_code,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: seconds > 0
-                                        ? mColorTextHint
-                                        : mColorPrimaryLight,
-                                    decoration: seconds > 0
-                                        ? TextDecoration.none
-                                        : TextDecoration.underline,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: ObxValue<RxInt>(
+                      (codeExpireCountDown) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(S.current.have_not_received_verify_code,
+                                  style: TextStyle(
+                                      color: mColorTextSecondary,
+                                      fontSize: 16)),
+                              GestureDetector(
+                                onTap: () {
+                                  if (codeExpireCountDown.value <= 0) {
+                                    _verifyController
+                                        .reRequestProvideVerifyCode();
+                                  }
+                                },
+                                child: Text(
+                                  codeExpireCountDown.value > 0
+                                      ? S.current.request_new_code_in_seconds(
+                                          codeExpireCountDown.value)
+                                      : S.current.request_new_code,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: codeExpireCountDown.value > 0
+                                          ? mColorTextHint
+                                          : mColorPrimaryLight,
+                                      decoration: codeExpireCountDown.value > 0
+                                          ? TextDecoration.none
+                                          : TextDecoration.underline,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
                               ),
-                            ),
-                          ],
-                        ));
-                  }),
+                            ],
+                          ),
+                      _verifyController.codeExpireCountDown)),
             ],
           ),
         ),
@@ -114,11 +161,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   _verifyCodeInput() => Form(
         // key: formKey,
         child: TextFormField(
+          controller: _textFormController,
           autofocus: false,
           onChanged: (value) async {
             if (value.length == 6) {
               _verifyController.verifyCode(int.parse(value.trim()));
-
             }
           },
           cursorColor: mColorTextHint,

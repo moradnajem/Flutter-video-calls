@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:configuration/data/common/api_exception.dart';
 import 'package:configuration/data/common/response_code.dart';
 import 'package:configuration/generated/l10n.dart';
+import 'package:configuration/utility/logging.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
+import 'package:flutter_video_calls/data/user/model/role.dart';
 import 'package:flutter_video_calls/data/verify/model/get_verify_code_request.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_code_request.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_type.dart';
@@ -20,8 +22,14 @@ class VerifyController extends GetxController {
 
   VerifyController({required this.verifyRepository});
 
-  RxString phoneNumber = ''.obs;
+  bool isRequesting = false;
+  static const int MAX_INCORRECT_COUNT = 3;
+  static const int EXPIRE_COUNT_DOWN = 30;
+
+  RxString rawPhoneNumber = ''.obs;
   RxString normalizedNumber = ''.obs;
+  RxInt codeExpireCountDown = EXPIRE_COUNT_DOWN.obs;
+  RxInt verifyIncorrectCount = MAX_INCORRECT_COUNT.obs;
 
   Rx<Country> country = Country(
           name: "Vietnam",
@@ -32,18 +40,22 @@ class VerifyController extends GetxController {
       .obs;
 
   phoneNumberIsCorrect() =>
-      (phoneNumber.value.length >= 7 && phoneNumber.value.length < 11) ||
-      phoneNumber.value.length == 14;
+      (rawPhoneNumber.value.length >= 7 && rawPhoneNumber.value.length < 11) ||
+      rawPhoneNumber.value.length == 14;
 
   phoneNumberWithAlpha2Code() async {
     normalizedNumber.value = await PhoneNumberUtil.normalizePhoneNumber(
-            phoneNumber: phoneNumber.value,
+            phoneNumber: rawPhoneNumber.value,
             isoCode: country.value.alpha2Code) ??
         '';
   }
 
   verifyCode(int code) async {
+    if (isRequesting) return;
     try {
+      isRequesting = true;
+      showDialogLoading();
+
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       var deviceId = "";
       var deviceName = "";
@@ -58,49 +70,59 @@ class VerifyController extends GetxController {
         deviceName = iosInfo.utsname.machine;
       }
 
-      await verifyRepository.verifyCode(VerifyCodeRequest(
-        email: null,
-        phoneNumber: phoneNumber.value,
-        dialCode: country.value.dialCode,
-        alpha2Code: country.value.alpha2Code,
-        alpha3Code: country.value.alpha3Code,
-        type: VerifyType.PHONE_NUMBER,
-        verifyCode: code,
-        deviceName: deviceName,
-        deviceId: deviceId,
-        platform: Platform.operatingSystem,
-      ));
-      Get.offAndToNamed(HomeRoute.ID);
+      final response = await verifyRepository.verifyCode(VerifyCodeRequest(
+          email: null,
+          phoneNumber: rawPhoneNumber.value,
+          dialCode: country.value.dialCode,
+          alpha2Code: country.value.alpha2Code,
+          alpha3Code: country.value.alpha3Code,
+          type: VerifyType.PHONE_NUMBER,
+          verifyCode: code,
+          deviceName: deviceName,
+          deviceId: deviceId,
+          platform: Platform.operatingSystem,
+          role: Role.CUSTOMER));
+      Get.back();
+      if (response?.code == ResponseCode.VERIFY_CODE_INCORRECT) {
+        verifyIncorrectCount.value = response?.errorBody ?? 0;
+      } else {
+        _reset();
+        Get.offAndToNamed(HomeRoute.ID);
+      }
     } on ApiException catch (e) {
       Get.back();
-      if(e.errorCode == ResponseCode.VERIFY_CODE_NOT_CORRECT){
-        //TODO show message error
-      }else {
-        showDialogError(content: e.errorMessage);
+      await showDialogError(content: e.errorMessage);
+
+      if (e.errorCode == ResponseCode.VERIFY_CODE_EXPIRE ||
+          e.errorCode == ResponseCode.WRONG_TOO_MANY_TIME) {
+        verifyIncorrectCount.value = 0;
+        Get.back();
       }
-    } catch (_) {
+    } catch (e) {
+      printError(info: e.toString());
       Get.back();
       showDialogError(content: S.current.unknown_error);
     }
+    isRequesting = false;
   }
 
   void reRequestProvideVerifyCode() async {
     try {
       await verifyRepository.getVerifyCode(GetVerifyCodeRequest(
         null,
-        phoneNumber.value,
+        rawPhoneNumber.value,
         country.value.dialCode,
         country.value.alpha2Code,
         country.value.alpha3Code,
         VerifyType.PHONE_NUMBER,
       ));
+      _reset();
       Get.snackbar(S.current.request, S.current.requested_new_code,
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.TOP);
     } on ApiException catch (e) {
-      Get.back();
       showDialogError(content: e.errorMessage);
-    } catch (_) {
-      Get.back();
+    } catch (e) {
+      printError(info: e.toString());
       showDialogError(content: S.current.unknown_error);
     }
   }
@@ -110,20 +132,27 @@ class VerifyController extends GetxController {
       showDialogLoading();
       await verifyRepository.getVerifyCode(GetVerifyCodeRequest(
         null,
-        phoneNumber.value,
+        rawPhoneNumber.value,
         country.value.dialCode,
         country.value.alpha2Code,
         country.value.alpha3Code,
         VerifyType.PHONE_NUMBER,
       ));
       Get.back();
+      _reset();
       Get.toNamed(VerifyCodeRoute.ID);
     } on ApiException catch (e) {
       Get.back();
       showDialogError(content: e.errorMessage);
-    } catch (_) {
+    } catch (e) {
+      printError(info: e.toString());
       Get.back();
       showDialogError(content: S.current.unknown_error);
     }
+  }
+
+  _reset() {
+    verifyIncorrectCount.value = MAX_INCORRECT_COUNT;
+    codeExpireCountDown.value = EXPIRE_COUNT_DOWN;
   }
 }

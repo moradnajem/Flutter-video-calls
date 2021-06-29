@@ -2,7 +2,9 @@ import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_video_calls/data/country/model/country_model.dart';
 import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
+import 'package:flutter_video_calls/views/sign_in/ui/widget/countries_search_list.dart';
 import 'package:flutter_video_calls/views/sign_in/ui/widget/country_flag.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
@@ -83,14 +85,20 @@ class _SignInScreenState extends State<SignInScreen> {
         height: 56,
         child: Row(
           children: [
-            Container(
-              height: 56,
-              margin: EdgeInsets.only(right: 8.0),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(4.0)),
-              child: CountryFlag(),
+            GestureDetector(
+              onTap: () async {
+                final country = await showCountrySelectorDialog();
+                if (country != null) _verifyController.country.value = country;
+              },
+              child: Container(
+                height: 56,
+                margin: EdgeInsets.only(right: 8.0),
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(4.0)),
+                child: CountryFlag(),
+              ),
             ),
             Expanded(
               child: Container(
@@ -102,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: TextFormField(
                   autofocus: false,
                   onChanged: (value) {
-                    _verifyController.phoneNumber.value = value;
+                    _verifyController.rawPhoneNumber.value = value;
                   },
                   validator: (value) {
                     if (value?.isEmpty == true) {
@@ -146,4 +154,14 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
       );
+
+  Future<Country?> showCountrySelectorDialog() => Get.dialog(
+    AlertDialog(
+      content: Container(
+        width: double.maxFinite,
+        child: CountrySearchList(),
+      ),
+    ),
+    barrierDismissible: false,
+  );
 }

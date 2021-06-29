@@ -16,8 +16,8 @@ class BuildConfig {
 
   const BuildConfig._development()
       : this._(
-          baseUrl: 'http://192.168.0.105:8762/api/',
-          socketUrl: 'http://192.168.0.105:8762/api/',
+          baseUrl: 'https://nice-baboon-29.loca.lt/api/',
+          socketUrl: 'https://nice-baboon-29.loca.lt/api/',
           connectTimeout: 5000,
           receiveTimeout: 5000,
           flavor: Flavor.DEVELOPMENT,
@@ -59,6 +59,7 @@ class BuildConfig {
       }
     }
     _iniLog(flavor);
+    Log.info("BuildConfig", _instance.toString());
   }
 
   static BuildConfig? get() {
@@ -86,6 +87,11 @@ class BuildConfig {
   final int receiveTimeout;
   final Flavor flavor;
   final Color color;
+
+  @override
+  String toString() {
+    return '{baseUrl: $baseUrl, socketUrl: $socketUrl, connectTimeout: $connectTimeout, receiveTimeout: $receiveTimeout, flavor: $flavor, color: $color}';
+  }
 
   static String flavorName() =>
       StringUtils.enumToName(_instance?.flavor.toString() ?? "");
