@@ -1,5 +1,5 @@
-import 'package:flutter_video_calls/data/user/model/role.dart';
-import 'package:flutter_video_calls/data/user/model/user.dart';
+import 'package:flutter_video_calls/data/account/model/role.dart';
+import 'package:flutter_video_calls/data/account/model/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account.g.dart';

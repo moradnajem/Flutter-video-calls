@@ -220,6 +220,16 @@ class S {
     );
   }
 
+  /// `Đang có vấn đề về dữ liệu. Vui lòng quay lại sau.`
+  String get database_exception {
+    return Intl.message(
+      'Đang có vấn đề về dữ liệu. Vui lòng quay lại sau.',
+      name: 'database_exception',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Invalid credentials`
   String get invalid_credentials {
     return Intl.message(

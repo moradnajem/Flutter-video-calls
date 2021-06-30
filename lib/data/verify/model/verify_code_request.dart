@@ -1,4 +1,4 @@
-import 'package:flutter_video_calls/data/user/model/role.dart';
+import 'package:flutter_video_calls/data/account/model/role.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 

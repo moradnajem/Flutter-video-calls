@@ -1,4 +1,4 @@
-import 'package:flutter_video_calls/data/user/model/Gender.dart';
+import 'package:flutter_video_calls/data/account/model/Gender.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
@@ -15,9 +15,9 @@ class User {
   @JsonKey(name: 'lastName')
   String? lastName;
   @JsonKey(name: 'weight')
-  int? weight;
+  double? weight;
   @JsonKey(name: 'height')
-  int? height;
+  double? height;
   @JsonKey(name: 'gender')
   Gender? gender;
   @JsonKey(name: 'description')

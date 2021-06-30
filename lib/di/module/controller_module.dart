@@ -5,7 +5,11 @@ import 'package:get/get.dart';
 class ControllerModule extends DIModule {
   @override
   provides() async {
-    getIt.registerLazySingleton(
-        () => Get.put(VerifyController(verifyRepository: getIt.get())));
+    getIt.registerLazySingleton(() => Get.put(
+          VerifyController(
+            verifyRepository: getIt.get(),
+            accountRepository: getIt.get(),
+          ),
+        ));
   }
 }

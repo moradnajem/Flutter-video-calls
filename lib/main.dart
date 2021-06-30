@@ -6,6 +6,7 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:configuration/route/route_define.dart';
 import 'package:configuration/utility/logging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_video_calls/data/country/repositories/country_repository.dart';
 import 'package:flutter_video_calls/data/introduction/introduction_pref.dart';
@@ -24,12 +25,12 @@ List<CameraDescription> cameras = [];
 class Main extends Env {
   @override
   FutureOr<StatefulWidget> onCreate() async{
+    // Avoid errors caused by flutter upgrade.
     WidgetsFlutterBinding.ensureInitialized();
     Style.styleDefault();
 
     // Fetch the available cameras before initializing the app.
     try {
-
       cameras = await availableCameras();
     } on Exception catch (e) {
       Log.warning("cameras",e.toString());

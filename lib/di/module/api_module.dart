@@ -5,18 +5,21 @@ import 'package:configuration/network/interceptor/data_format_interceptor.dart';
 import 'package:configuration/network/interceptor/token_interceptor.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter_video_calls/data/account/account_api.dart';
 import 'package:flutter_video_calls/data/verify/verify_api.dart';
 
 class ApiModule extends DIModule {
   @override
   provides() async {
-    final dio = await setup();
+    final dio = await _setup();
     getIt.registerSingleton(dio);
-    // register api
+
+    // service registration
     getIt.registerSingleton(VerifyApi(dio, baseUrl: dio.options.baseUrl));
+    getIt.registerSingleton(AccountApi(dio, baseUrl: dio.options.baseUrl));
   }
 
-  static FutureOr<Dio> setup() async {
+ FutureOr<Dio> _setup() async {
     final options = BaseOptions(
       connectTimeout: BuildConfig.get()?.connectTimeout,
       receiveTimeout: BuildConfig.get()?.receiveTimeout,

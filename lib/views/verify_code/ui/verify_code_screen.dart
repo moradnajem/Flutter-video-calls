@@ -164,8 +164,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
           controller: _textFormController,
           autofocus: false,
           onChanged: (value) async {
-            if (value.length == 6) {
-              _verifyController.verifyCode(int.parse(value.trim()));
+            if (value.length >= 6) {
+              await _verifyController.verifyCode(int.parse(value.trim()));
             }
           },
           cursorColor: mColorTextHint,

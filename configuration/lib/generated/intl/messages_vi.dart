@@ -83,6 +83,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Thời gian kết nối kéo dài. Vui lòng thử lại"),
         "connection_problem": MessageLookupByLibrary.simpleMessage(
             "Có một số vấn đề với kết nối. Vui lòng thử lại"),
+        "database_exception": MessageLookupByLibrary.simpleMessage(
+            "Đang có vấn đề về dữ liệu. Vui lòng quay lại sau."),
         "enter_verify_code": MessageLookupByLibrary.simpleMessage(
             "Nhập mã gồm 6 chữ số đã gửi tới"),
         "enters_code_incorrect": m0,

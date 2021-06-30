@@ -4,17 +4,17 @@ import 'package:configuration/di/di_module.dart';
 
 class SessionPref {
   static void saveSession(
-      {required String accessToken, required String refreshToken}) {
+      {required String accessToken}) {
     var preferencesManager = getIt.get<SharedPreferencesManager>();
     preferencesManager.putString(keyAccessToken, accessToken);
-    preferencesManager.putString(keyRefreshToken, refreshToken);
+    // preferencesManager.putString(keyRefreshToken, refreshToken);
   }
 
   static String? getAccessToken() =>
       getIt.get<SharedPreferencesManager>().getString(keyAccessToken);
 
-  static String? getRefreshToken() =>
-      getIt.get<SharedPreferencesManager>().getString(keyRefreshToken);
+  // static String? getRefreshToken() =>
+  //     getIt.get<SharedPreferencesManager>().getString(keyRefreshToken);
 
   static bool isSessionValid() {
     try {

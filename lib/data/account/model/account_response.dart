@@ -1,8 +1,10 @@
 import 'package:configuration/data/common/base_response.dart';
-import 'package:flutter_video_calls/data/user/model/account.dart';
+import 'package:flutter_video_calls/data/account/model/account.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_response.g.dart';
+
+
 
 @JsonSerializable()
 class AccountResponse extends BaseResponse {

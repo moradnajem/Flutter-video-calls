@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:configuration/data/common/api_exception.dart';
 import 'package:configuration/data/common/response_code.dart';
+import 'package:configuration/data/exceptions/api_exception.dart';
 import 'package:configuration/generated/l10n.dart';
-import 'package:configuration/utility/logging.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter_video_calls/data/account/repositories/account_repository.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
-import 'package:flutter_video_calls/data/user/model/role.dart';
+import 'package:flutter_video_calls/data/account/model/role.dart';
 import 'package:flutter_video_calls/data/verify/model/get_verify_code_request.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_code_request.dart';
 import 'package:flutter_video_calls/data/verify/model/verify_type.dart';
@@ -16,11 +16,14 @@ import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:flutter_video_calls/views/verify_code/verify_code_route.dart';
 import 'package:get/get.dart';
 import 'package:libphonenumber/libphonenumber.dart';
+import 'package:configuration/data/exceptions/data_local_exception.dart';
 
 class VerifyController extends GetxController {
   VerifyRepository verifyRepository;
+  AccountRepository accountRepository;
 
-  VerifyController({required this.verifyRepository});
+  VerifyController(
+      {required this.verifyRepository, required this.accountRepository});
 
   bool isRequesting = false;
   static const int MAX_INCORRECT_COUNT = 3;
@@ -82,12 +85,20 @@ class VerifyController extends GetxController {
           deviceId: deviceId,
           platform: Platform.operatingSystem,
           role: Role.CUSTOMER));
+
       Get.back();
       if (response?.code == ResponseCode.VERIFY_CODE_INCORRECT) {
         verifyIncorrectCount.value = response?.errorBody ?? 0;
       } else {
-        _reset();
-        Get.offAndToNamed(HomeRoute.ID);
+        if (response?.account == null) {
+          _reset();
+          Get.back();
+          showDialogError(content: S.current.unknown_error);
+        } else {
+          await accountRepository.saveAccount(response!.account!);
+          _reset();
+          Get.offAndToNamed(HomeRoute.ID);
+        }
       }
     } on ApiException catch (e) {
       Get.back();
@@ -98,8 +109,10 @@ class VerifyController extends GetxController {
         verifyIncorrectCount.value = 0;
         Get.back();
       }
+    } on DataLocalException catch (e) {
+      Get.back();
+      showDialogError(content: e.errorMessage);
     } catch (e) {
-      printError(info: e.toString());
       Get.back();
       showDialogError(content: S.current.unknown_error);
     }

@@ -16,8 +16,8 @@ class BuildConfig {
 
   const BuildConfig._development()
       : this._(
-          baseUrl: 'https://nice-baboon-29.loca.lt/api/',
-          socketUrl: 'https://nice-baboon-29.loca.lt/api/',
+          baseUrl: 'https://old-pug-12.loca.lt/api/',
+          socketUrl: 'https://old-pug-12.loca.lt/api/',
           connectTimeout: 5000,
           receiveTimeout: 5000,
           flavor: Flavor.DEVELOPMENT,

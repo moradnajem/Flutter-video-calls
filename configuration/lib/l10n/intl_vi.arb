@@ -18,6 +18,8 @@
   "requested_new_code": "Yêu cầu gửi mã mới thành công!",
   "enters_code_incorrect": "Mã không đúng. Bạn có thể thử thêm {incorrectCount} lần nữa.",
 
+  "database_exception": "Đang có vấn đề về dữ liệu. Vui lòng quay lại sau.",
+
   "invalid_credentials": "Invalid credentials",
   "cancelled": "Cancelled",
   "connect_timeout": "Thời gian kết nối kéo dài. Vui lòng thử lại",
