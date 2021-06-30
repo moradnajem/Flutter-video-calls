@@ -97,7 +97,7 @@ class VerifyController extends GetxController {
         } else {
           await accountRepository.saveAccount(response!.account!);
           _reset();
-          Get.offAndToNamed(HomeRoute.ID);
+          Get.offAllNamed(HomeRoute.ID);
         }
       }
     } on ApiException catch (e) {
