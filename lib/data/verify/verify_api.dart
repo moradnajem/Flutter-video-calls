@@ -11,9 +11,9 @@ part 'verify_api.g.dart';
 abstract class VerifyApi {
   factory VerifyApi(Dio dio, {String baseUrl}) = _VerifyApi;
 
-  @POST('auth//getVerifyCode')
+  @POST('auth/verify/phone')
   Future<BaseResponse?>? getVerifyCode(@Body() GetVerifyCodeRequest request);
 
-  @POST('auth//verify')
+  @POST('auth/verify/code')
   Future<VerifyCodeResponse?>? verifyCode(@Body() VerifyCodeRequest request);
 }
