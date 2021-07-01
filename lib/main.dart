@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:camera/camera.dart';
+import 'package:configuration/data/source/local/sessions_pref.dart';
 import 'package:configuration/environment/env.dart';
 import 'package:configuration/generated/l10n.dart';
 import 'package:configuration/route/route_define.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_video_calls/data/country/repositories/country_repository
 import 'package:flutter_video_calls/data/introduction/introduction_pref.dart';
 import 'package:flutter_video_calls/di/injection/injection.dart';
 import 'package:flutter_video_calls/manifest.dart';
+import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:flutter_video_calls/views/introduction/introduction_route.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,7 @@ List<CameraDescription> cameras = [];
 
 class Main extends Env {
   @override
-  FutureOr<StatefulWidget> onCreate() async{
+  FutureOr<StatefulWidget> onCreate() async {
     // Avoid errors caused by flutter upgrade.
     WidgetsFlutterBinding.ensureInitialized();
     Style.styleDefault();
@@ -33,7 +35,7 @@ class Main extends Env {
     try {
       cameras = await availableCameras();
     } on Exception catch (e) {
-      Log.warning("cameras",e.toString());
+      Log.warning("cameras", e.toString());
     }
 
     CountryRepository.getCountriesData();
@@ -58,8 +60,8 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-
-  final route = IntroductionPref.canShowIntro() ?  IntroductionRoute.ID : SignInRoute.ID;
+  final route =
+      SessionPref.isSessionValid() ? IntroductionRoute.ID : HomeRoute.ID;
 
   @override
   Widget build(BuildContext context) {

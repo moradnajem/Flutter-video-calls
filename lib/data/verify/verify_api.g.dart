@@ -14,7 +14,7 @@ class _VerifyApi implements VerifyApi {
   String? baseUrl;
 
   @override
-  Future<BaseResponse?>? getVerifyCode(request) async {
+  Future<BaseResponse?>? getCodeVerifyPhone(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -22,7 +22,7 @@ class _VerifyApi implements VerifyApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, 'auth//getVerifyCode',
+                .compose(_dio.options, 'auth/verify/phone',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
@@ -39,7 +39,7 @@ class _VerifyApi implements VerifyApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<VerifyCodeResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, 'auth//verify',
+                .compose(_dio.options, 'auth/verify/code',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data == null

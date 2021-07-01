@@ -87,23 +87,22 @@ class VerifyController extends GetxController {
           role: Role.CUSTOMER));
 
       Get.back();
-      if (response?.code == ResponseCode.VERIFY_CODE_INCORRECT) {
-        verifyIncorrectCount.value = response?.errorBody ?? 0;
+      if (response?.account == null) {
+        _reset();
+        Get.back();
+        showDialogError(content: S.current.unknown_error);
       } else {
-        if (response?.account == null) {
-          _reset();
-          Get.back();
-          showDialogError(content: S.current.unknown_error);
-        } else {
-          await accountRepository.saveAccount(response!.account!);
-          _reset();
-          Get.offAllNamed(HomeRoute.ID);
-        }
+        await accountRepository.saveAccount(response!.account!);
+        _reset();
+        Get.offAllNamed(HomeRoute.ID);
       }
     } on ApiException catch (e) {
       Get.back();
       await showDialogError(content: e.errorMessage);
 
+      if (e.errorCode == ResponseCode.VERIFY_CODE_INCORRECT) {
+        verifyIncorrectCount.value = e.errorBody ?? 0;
+      }
       if (e.errorCode == ResponseCode.VERIFY_CODE_EXPIRE ||
           e.errorCode == ResponseCode.WRONG_TOO_MANY_TIME) {
         verifyIncorrectCount.value = 0;

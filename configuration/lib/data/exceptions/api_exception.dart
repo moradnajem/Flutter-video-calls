@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 class ApiException {
   late int? errorCode;
   late String? errorMessage = "";
+  late dynamic errorBody = "";
   late DioError exception;
 
   String? get displayError {
@@ -57,15 +58,16 @@ class ApiException {
     switch (exception.type) {
       case DioErrorType.response:
         {
-          dynamic errorBody = exception.response?.data;
+          dynamic data = exception.response?.data;
           try {
-            if (errorBody is BaseResponse) {
-              errorMessage = errorBody.code == ResponseCode.UNAUTHORIZED ||
-                      errorBody.code == ResponseCode.FORBIDDEN
+            if (data is BaseResponse) {
+              errorMessage = data.code == ResponseCode.UNAUTHORIZED ||
+                  data.code == ResponseCode.FORBIDDEN
                   ? S.current.invalid_credentials
-                  : errorBody.code?.message ?? errorBody.error;
+                  : data.code?.message ?? data.error;
 
-              errorCode = errorBody.code;
+              errorCode = data.code;
+              errorBody = data.errorBody;
             }
           } catch (e) {
             errorMessage = e.toString();

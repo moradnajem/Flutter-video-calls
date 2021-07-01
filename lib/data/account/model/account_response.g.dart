@@ -16,7 +16,6 @@ AccountResponse _$AccountResponseFromJson(Map<String, dynamic> json) {
     ..code = json['code'] as int?
     ..message = json['message'] as String?
     ..error = json['error'] as String?
-    ..token = json['token'] as String?
     ..errorBody = json['errorBody'];
 }
 
@@ -26,7 +25,6 @@ Map<String, dynamic> _$AccountResponseToJson(AccountResponse instance) =>
       'code': instance.code,
       'message': instance.message,
       'error': instance.error,
-      'token': instance.token,
       'errorBody': instance.errorBody,
       'data': instance.account,
     };

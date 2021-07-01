@@ -12,7 +12,7 @@ abstract class VerifyApi {
   factory VerifyApi(Dio dio, {String baseUrl}) = _VerifyApi;
 
   @POST('auth/verify/phone')
-  Future<BaseResponse?>? getVerifyCode(@Body() GetVerifyCodeRequest request);
+  Future<BaseResponse?>? getCodeVerifyPhone(@Body() GetVerifyCodeRequest request);
 
   @POST('auth/verify/code')
   Future<VerifyCodeResponse?>? verifyCode(@Body() VerifyCodeRequest request);

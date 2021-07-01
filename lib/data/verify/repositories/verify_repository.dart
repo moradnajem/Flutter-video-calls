@@ -13,7 +13,7 @@ class VerifyRepository {
 
   Future<BaseResponse?> getVerifyCode(GetVerifyCodeRequest request) async {
     try {
-      final response = await api?.getVerifyCode(request);
+      final response = await api?.getCodeVerifyPhone(request);
       return response;
     } on DioError catch (dioError) {
       throw ApiException(exception: dioError);
