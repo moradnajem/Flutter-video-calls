@@ -128,7 +128,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                                 onTap: () {
                                   if (codeExpireCountDown.value <= 0) {
                                     _verifyController
-                                        .reRequestProvideVerifyCode();
+                                        .reSignUp();
                                   }
                                 },
                                 child: Text(

@@ -14,7 +14,7 @@ class ResponseCode {
   static const EMAIL_PASSWORD_INCORRECT = 1001;
   static const SOCIAL_PASSWORD_INCORRECT = 1002;
 
-  static const PHONE_NUMBER_PASSWORD_INCORRECT = 1003;
+  static const PHONE_NUMBER_NOT_EXISTS = 1003;
 
   static const PASSWORD_IS_NULL_BLANK = 1004;
   static const EMAIL_IS_NULL_BLANK = 1005;
@@ -68,7 +68,7 @@ extension messageResponse on int {
     ResponseCode.EMAIL_PASSWORD_INCORRECT: S.current.code_1001,
     ResponseCode.SOCIAL_PASSWORD_INCORRECT: S.current.code_1002,
 
-    ResponseCode.PHONE_NUMBER_PASSWORD_INCORRECT: S.current.code_1003,
+    ResponseCode.PHONE_NUMBER_NOT_EXISTS: S.current.code_1003,
 
     ResponseCode.PASSWORD_IS_NULL_BLANK: S.current.code_1004,
     ResponseCode.EMAIL_IS_NULL_BLANK: S.current.code_1005,

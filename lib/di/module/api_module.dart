@@ -6,7 +6,7 @@ import 'package:configuration/network/interceptor/token_interceptor.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_video_calls/data/account/account_api.dart';
-import 'package:flutter_video_calls/data/verify/verify_api.dart';
+import 'package:flutter_video_calls/data/auth/auth_api.dart';
 
 class ApiModule extends DIModule {
   @override
@@ -15,7 +15,7 @@ class ApiModule extends DIModule {
     getIt.registerSingleton(dio);
 
     // service registration
-    getIt.registerSingleton(VerifyApi(dio, baseUrl: dio.options.baseUrl));
+    getIt.registerSingleton(AuthApi(dio, baseUrl: dio.options.baseUrl));
     getIt.registerSingleton(AccountApi(dio, baseUrl: dio.options.baseUrl));
   }
 

@@ -1,4 +1,4 @@
-import 'package:flutter_video_calls/data/verify/model/verify_type.dart';
+import 'package:flutter_video_calls/data/auth/model/verify_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'get_verify_code_request.g.dart';

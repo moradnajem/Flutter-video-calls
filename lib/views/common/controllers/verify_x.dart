@@ -2,28 +2,28 @@ import 'dart:io';
 
 import 'package:configuration/data/common/response_code.dart';
 import 'package:configuration/data/exceptions/api_exception.dart';
+import 'package:configuration/data/exceptions/data_local_exception.dart';
 import 'package:configuration/generated/l10n.dart';
 import 'package:device_info/device_info.dart';
-import 'package:flutter_video_calls/data/account/repositories/account_repository.dart';
-import 'package:flutter_video_calls/data/country/model/country_model.dart';
 import 'package:flutter_video_calls/data/account/model/role.dart';
-import 'package:flutter_video_calls/data/verify/model/get_verify_code_request.dart';
-import 'package:flutter_video_calls/data/verify/model/verify_code_request.dart';
-import 'package:flutter_video_calls/data/verify/model/verify_type.dart';
-import 'package:flutter_video_calls/data/verify/repositories/verify_repository.dart';
+import 'package:flutter_video_calls/data/account/repositories/account_repository.dart';
+import 'package:flutter_video_calls/data/auth/model/get_verify_code_request.dart';
+import 'package:flutter_video_calls/data/auth/model/signin_request.dart';
+import 'package:flutter_video_calls/data/auth/model/verify_code_request.dart';
+import 'package:flutter_video_calls/data/auth/model/verify_type.dart';
+import 'package:flutter_video_calls/data/auth/repositories/auth_repository.dart';
+import 'package:flutter_video_calls/data/country/model/country_model.dart';
 import 'package:flutter_video_calls/views/dialogs/dialog.dart';
 import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:flutter_video_calls/views/verify_code/verify_code_route.dart';
 import 'package:get/get.dart';
 import 'package:libphonenumber/libphonenumber.dart';
-import 'package:configuration/data/exceptions/data_local_exception.dart';
 
 class VerifyController extends GetxController {
-  VerifyRepository verifyRepository;
+  AuthRepository verifyRepository;
   AccountRepository accountRepository;
 
-  VerifyController(
-      {required this.verifyRepository, required this.accountRepository});
+  VerifyController({required this.verifyRepository, required this.accountRepository});
 
   bool isRequesting = false;
   static const int MAX_INCORRECT_COUNT = 3;
@@ -93,6 +93,7 @@ class VerifyController extends GetxController {
         showDialogError(content: S.current.unknown_error);
       } else {
         await accountRepository.saveAccount(response!.account!);
+
         _reset();
         Get.offAllNamed(HomeRoute.ID);
       }
@@ -118,9 +119,9 @@ class VerifyController extends GetxController {
     isRequesting = false;
   }
 
-  void reRequestProvideVerifyCode() async {
+  void reSignUp() async {
     try {
-      await verifyRepository.getVerifyCode(GetVerifyCodeRequest(
+      await verifyRepository.signUp(GetVerifyCodeRequest(
         null,
         rawPhoneNumber.value,
         country.value.dialCode,
@@ -139,16 +140,58 @@ class VerifyController extends GetxController {
     }
   }
 
-  void requestProvideVerifyCode() async {
+  void signUp() async {
     try {
       showDialogLoading();
-      await verifyRepository.getVerifyCode(GetVerifyCodeRequest(
+      await verifyRepository.signUp(GetVerifyCodeRequest(
         null,
         rawPhoneNumber.value,
         country.value.dialCode,
         country.value.alpha2Code,
         country.value.alpha3Code,
         VerifyType.PHONE_NUMBER,
+      ));
+      Get.back();
+      _reset();
+      Get.toNamed(VerifyCodeRoute.ID);
+    } on ApiException catch (e) {
+      Get.back();
+      showDialogError(content: e.errorMessage);
+    } catch (e) {
+      printError(info: e.toString());
+      Get.back();
+      showDialogError(content: S.current.unknown_error);
+    }
+  }
+
+  void signIn() async {
+    try {
+      showDialogLoading();
+
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      var deviceId = "";
+      var deviceName = "";
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        deviceId = androidInfo.androidId;
+        deviceName = androidInfo.model;
+      }
+      if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        deviceId = iosInfo.identifierForVendor;
+        deviceName = iosInfo.utsname.machine;
+      }
+
+      await verifyRepository.signIn(SignInRequest(
+        email: null,
+        phoneNumber: rawPhoneNumber.value,
+        dialCode: country.value.dialCode,
+        alpha2Code: country.value.alpha2Code,
+        alpha3Code: country.value.alpha3Code,
+        type: VerifyType.PHONE_NUMBER,
+        deviceName: deviceName,
+        deviceId: deviceId,
+        platform: Platform.operatingSystem,
       ));
       Get.back();
       _reset();

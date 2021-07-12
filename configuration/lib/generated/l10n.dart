@@ -120,6 +120,36 @@ class S {
     );
   }
 
+  /// `Bạn hãy dùng số điện thoại đã được đăng ký để thực hiện đăng nhập.`
+  String get provide_phone_number_registered_before {
+    return Intl.message(
+      'Bạn hãy dùng số điện thoại đã được đăng ký để thực hiện đăng nhập.',
+      name: 'provide_phone_number_registered_before',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Số điện thoại không được để trống`
+  String get phone_number_is_not_empty {
+    return Intl.message(
+      'Số điện thoại không được để trống',
+      name: 'phone_number_is_not_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `9876543210`
+  String get phone_number_hint {
+    return Intl.message(
+      '9876543210',
+      name: 'phone_number_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Tiếp`
   String get next {
     return Intl.message(
@@ -420,10 +450,10 @@ class S {
     );
   }
 
-  /// `Số điện thoại và mật khẩu không đúng.`
+  /// `Số điện thoại chưa được đăng ký.`
   String get code_1003 {
     return Intl.message(
-      'Số điện thoại và mật khẩu không đúng.',
+      'Số điện thoại chưa được đăng ký.',
       name: 'code_1003',
       desc: '',
       args: [],

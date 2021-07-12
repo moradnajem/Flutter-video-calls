@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
+import 'package:flutter_video_calls/views/sign_up/signup_route.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
 import 'package:ui/style/style.dart';
@@ -119,7 +120,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                   height: 55.0,
                   label: S.current.or_register_now,
                   callback: () {
-                    Get.toNamed(SignInRoute.ID);
+                    Get.toNamed(SignUpRoute.ID);
                   },
                 ),
                 SizedBox(

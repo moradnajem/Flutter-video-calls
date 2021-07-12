@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'verify_api.dart';
+part of 'auth_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _VerifyApi implements VerifyApi {
-  _VerifyApi(this._dio, {this.baseUrl});
+class _AuthApi implements AuthApi {
+  _AuthApi(this._dio, {this.baseUrl});
 
   final Dio _dio;
 
   String? baseUrl;
 
   @override
-  Future<BaseResponse?>? getCodeVerifyPhone(request) async {
+  Future<BaseResponse?>? signUnWithPhoneNUmber(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -31,20 +31,36 @@ class _VerifyApi implements VerifyApi {
   }
 
   @override
-  Future<VerifyCodeResponse?>? verifyCode(request) async {
+  Future<AccountResponse?>? verifyCode(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<VerifyCodeResponse>(
+        _setStreamType<AccountResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, 'auth/verify/code',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data == null
-        ? null
-        : VerifyCodeResponse.fromJson(_result.data!);
+    final value =
+        _result.data == null ? null : AccountResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AccountResponse?>? signInWithPhoneNumber(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AccountResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'auth/login/phone',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        _result.data == null ? null : AccountResponse.fromJson(_result.data!);
     return value;
   }
 

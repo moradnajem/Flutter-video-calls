@@ -10,14 +10,14 @@ import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
 import 'package:ui/style/style.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _verifyController = getIt.get<VerifyController>();
 
   @override
@@ -61,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: mSpacing,
                   ),
                   Text(
-                    S.current.provide_phone_number_registered_before,
+                    S.current.reason_provide_phone_number,
                     style: TextStyle(
                       color: mColorTextSecondary,
                       fontSize: 14,
@@ -81,7 +81,8 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  _phoneNumberInput() => Container(
+  _phoneNumberInput() =>
+      Container(
         height: 56,
         child: Row(
           children: [
@@ -115,7 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   validator: (value) {
                     if (value?.isEmpty == true) {
                       return S.current.phone_number_is_not_empty;
-                    }
+                  }
                   },
                   cursorColor: mColorTextHint,
                   style: TextStyle(
@@ -139,23 +140,26 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       );
 
-  _continueVerifyCode() => Container(
+  _continueVerifyCode() =>
+      Container(
         margin: EdgeInsets.symmetric(vertical: 18.0),
         child: Obx(
-          () => ButtonRadius(
-            height: 55.0,
-            label: S.current.next,
-            background: mColorPrimary,
-            textColor: Colors.white,
-            enable: _verifyController.phoneNumberIsCorrect(),
-            callback: () {
-              _verifyController.signUp();
-            },
-          ),
+              () =>
+              ButtonRadius(
+                height: 55.0,
+                label: S.current.next,
+                background: mColorPrimary,
+                textColor: Colors.white,
+                enable: _verifyController.phoneNumberIsCorrect(),
+                callback: () {
+                  _verifyController.signUp();
+                },
+              ),
         ),
       );
 
-  Future<Country?> showCountrySelectorDialog() => Get.dialog(
+  Future<Country?> showCountrySelectorDialog() =>
+      Get.dialog(
         AlertDialog(
           content: Container(
             width: double.maxFinite,

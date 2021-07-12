@@ -38,7 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "code_1002": MessageLookupByLibrary.simpleMessage(
             "Tài khoản mạng xã hội không đúng."),
         "code_1003": MessageLookupByLibrary.simpleMessage(
-            "Số điện thoại và mật khẩu không đúng."),
+            "Số điện thoại chưa được đăng ký."),
         "code_1004": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu không được để trống."),
         "code_1005":
@@ -97,9 +97,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Tiếp"),
         "or_register_now":
             MessageLookupByLibrary.simpleMessage("Hoặc đang ký ngay"),
+        "phone_number_hint": MessageLookupByLibrary.simpleMessage("9876543210"),
+        "phone_number_is_not_empty": MessageLookupByLibrary.simpleMessage(
+            "Số điện thoại không được để trống"),
         "please_check_internet_connection":
             MessageLookupByLibrary.simpleMessage(
                 "Làm ơn kiểm tra kết nối mạng."),
+        "provide_phone_number_registered_before":
+            MessageLookupByLibrary.simpleMessage(
+                "Bạn hãy dùng số điện thoại đã được đăng ký để thực hiện đăng nhập."),
         "reason_provide_phone_number": MessageLookupByLibrary.simpleMessage(
             "Bạn sẽ cần số điện thoại để xác thực thông tin và đăng nhập vào ứng dụng."),
         "receive_timeout": MessageLookupByLibrary.simpleMessage(
