@@ -13,7 +13,7 @@ VerifyCodeRequest _$VerifyCodeRequestFromJson(Map<String, dynamic> json) {
     dialCode: json['dialCode'] as String?,
     alpha2Code: json['alpha2Code'] as String?,
     alpha3Code: json['alpha3Code'] as String?,
-    type: _$enumDecodeNullable(_$VerifyTypeEnumMap, json['type']),
+    typeCode: _$enumDecodeNullable(_$VerifyTypeCodeEnumMap, json['typeCode']),
     verifyCode: json['verifyCode'] as int?,
     deviceName: json['deviceName'] as String?,
     deviceId: json['deviceId'] as String?,
@@ -29,7 +29,7 @@ Map<String, dynamic> _$VerifyCodeRequestToJson(VerifyCodeRequest instance) =>
       'dialCode': instance.dialCode,
       'alpha2Code': instance.alpha2Code,
       'alpha3Code': instance.alpha3Code,
-      'type': _$VerifyTypeEnumMap[instance.type],
+      'typeCode': _$VerifyTypeCodeEnumMap[instance.typeCode],
       'verifyCode': instance.verifyCode,
       'deviceName': instance.deviceName,
       'deviceId': instance.deviceId,
@@ -74,10 +74,10 @@ K? _$enumDecodeNullable<K, V>(
   return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
-const _$VerifyTypeEnumMap = {
-  VerifyType.PHONE_NUMBER: 'PHONE_NUMBER',
-  VerifyType.EMAIL: 'EMAIL',
-  VerifyType.PASSWORD: 'PASSWORD',
+const _$VerifyTypeCodeEnumMap = {
+  VerifyTypeCode.PHONE_NUMBER: 'PHONE_NUMBER',
+  VerifyTypeCode.EMAIL: 'EMAIL',
+  VerifyTypeCode.PASSWORD: 'PASSWORD',
 };
 
 const _$RoleEnumMap = {

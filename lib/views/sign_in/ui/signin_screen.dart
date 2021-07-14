@@ -1,11 +1,12 @@
 import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
+import 'package:configuration/utility/logging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
-import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
 import 'package:flutter_video_calls/views/common/view/coutries/widget/countries_search_list.dart';
 import 'package:flutter_video_calls/views/common/view/coutries/widget/country_flag.dart';
+import 'package:flutter_video_calls/views/sign_in/controller/signin_x.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
 import 'package:ui/style/style.dart';
@@ -18,12 +19,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _verifyController = getIt.get<VerifyController>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _signInController = SignInController(authRepository: getIt.get());
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +84,8 @@ class _SignInScreenState extends State<SignInScreen> {
             GestureDetector(
               onTap: () async {
                 final country = await showCountrySelectorDialog();
-                if (country != null) _verifyController.country.value = country;
+                Log.fine("aaaaaaaaaaaa", country.toString());
+                if (country != null) _signInController.country.value = country;
               },
               child: Container(
                 height: 56,
@@ -97,7 +94,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4.0)),
-                child: CountryFlag(),
+                child: ObxValue<Rx<Country>>(
+                  (country) => CountryFlag(country.value),
+                  _signInController.country,
+                ),
               ),
             ),
             Expanded(
@@ -110,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: TextFormField(
                   autofocus: false,
                   onChanged: (value) {
-                    _verifyController.rawPhoneNumber.value = value;
+                    _signInController.rawPhoneNumber.value = value;
                   },
                   validator: (value) {
                     if (value?.isEmpty == true) {
@@ -147,9 +147,9 @@ class _SignInScreenState extends State<SignInScreen> {
             label: S.current.next,
             background: mColorPrimary,
             textColor: Colors.white,
-            enable: _verifyController.phoneNumberIsCorrect(),
+            enable: _signInController.phoneNumberIsCorrect,
             callback: () {
-              _verifyController.signUp();
+              _signInController.sendVerifyCode();
             },
           ),
         ),

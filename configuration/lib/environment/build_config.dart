@@ -16,8 +16,8 @@ class BuildConfig {
 
   const BuildConfig._development()
       : this._(
-          baseUrl: 'https://cuddly-parrot-75.loca.lt/api/',
-          socketUrl: 'https://cuddly-parrot-75.loca.lt/api/',
+          baseUrl: 'https://proud-eagle-95.loca.lt/api/',
+          socketUrl: 'https://proud-eagle-95.loca.lt/api/',
           connectTimeout: 5000,
           receiveTimeout: 5000,
           flavor: Flavor.DEVELOPMENT,

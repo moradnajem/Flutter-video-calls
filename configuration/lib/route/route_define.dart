@@ -4,12 +4,13 @@ final List<RouteDefine> routes = [];
 
 abstract class RouteDefine {
   build(Map<String?, WidgetBuilder?>? routeBuilders, RouteSettings settings) {
-    initRoute(settings.arguments).forEach((element) {
+    initRoute(settings.arguments == null ? null : settings.arguments as Map)
+        .forEach((element) {
       routeBuilders?.addAll(element.path());
     });
   }
 
-  List<Path> initRoute(Object? arguments);
+  List<Path> initRoute(Map? arguments);
 
   RouteDefine() {
     routes.add(this);
@@ -33,7 +34,7 @@ MaterialPageRoute? manifest(Function generateRoute, RouteSettings settings) {
   });
 
   final Widget Function(BuildContext context)? routeBuilder =
-  routeBuilders?[settings.name ?? ""];
+      routeBuilders?[settings.name ?? ""];
 
   return MaterialPageRoute(
       builder: (context) => routeBuilder!(context),

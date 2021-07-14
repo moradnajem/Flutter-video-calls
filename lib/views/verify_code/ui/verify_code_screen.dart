@@ -3,12 +3,23 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:configuration/utility/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
+import 'package:flutter_video_calls/data/auth/model/send_verify_type.dart';
+import 'package:flutter_video_calls/data/country/model/country_model.dart';
+import 'package:flutter_video_calls/views/verify_code/controller/verify_x.dart';
 import 'package:get/get.dart';
 import 'package:ui/style/style.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
-  const VerifyCodeScreen({Key? key}) : super(key: key);
+  final Country? country;
+  final String? phoneNumber;
+  final SendVerifyType? sendVerifyType;
+
+  VerifyCodeScreen({
+    required this.sendVerifyType,
+    required this.country,
+    required this.phoneNumber,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _VerifyCodeScreenState createState() => _VerifyCodeScreenState();
@@ -16,13 +27,21 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen>
     with TickerProviderStateMixin {
-  final _verifyController = getIt.get<VerifyController>();
-  TextEditingController _textFormController = TextEditingController();
+  final _verifyController =  VerifyController(
+    authRepository: getIt.get(),
+    accountRepository: getIt.get(),
+  );
+
+  final TextEditingController _textFormController = TextEditingController();
   late Animation<Duration> _animation;
   AnimationController? _controller;
 
   @override
   void initState() {
+    _verifyController.rawPhoneNumber.value = widget.phoneNumber ?? "";
+    _verifyController.country.value = widget.country!;
+    _verifyController.sendVerifyType = widget.sendVerifyType!;
+
     _controller = AnimationController(
         duration:
             Duration(seconds: _verifyController.codeExpireCountDown.value),
@@ -45,8 +64,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
       _textFormController.clear();
     });
     _controller?.forward();
-    Utils.afterBuild(() {
+    afterBuild(() {
       _verifyController.phoneNumberWithAlpha2Code();
+      _verifyController.codeExpireCountDown.value = 30;
     });
     super.initState();
   }
@@ -127,8 +147,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                               GestureDetector(
                                 onTap: () {
                                   if (codeExpireCountDown.value <= 0) {
-                                    _verifyController
-                                        .reSignUp();
+                                    _verifyController.reSendVerifyCode();
                                   }
                                 },
                                 child: Text(
@@ -165,7 +184,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
           autofocus: false,
           onChanged: (value) async {
             if (value.length >= 6) {
-              await _verifyController.verifyCode(int.parse(value.trim()));
+              await _verifyController.verification(int.parse(value.trim()));
             }
           },
           cursorColor: mColorTextHint,

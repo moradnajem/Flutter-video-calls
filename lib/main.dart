@@ -62,7 +62,7 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   final route =
-      SessionPref.isSessionValid() ? IntroductionRoute.ID : CallOutRoute.ID;
+      SessionPref.isSessionValid() ?  CallOutRoute.ID : IntroductionRoute.ID;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class _ApplicationState extends State<Application> {
       debugShowCheckedModeBanner: false,
       locale: Get.deviceLocale,
       fallbackLocale: const Locale('vi'),
-      initialRoute: IntroductionRoute.ID,
+      initialRoute: route,
       onGenerateRoute: (settings) => manifest(generateRoutes, settings),
     );
   }

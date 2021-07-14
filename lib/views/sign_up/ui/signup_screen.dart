@@ -3,9 +3,9 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
-import 'package:flutter_video_calls/views/common/controllers/verify_x.dart';
 import 'package:flutter_video_calls/views/common/view/coutries/widget/countries_search_list.dart';
 import 'package:flutter_video_calls/views/common/view/coutries/widget/country_flag.dart';
+import 'package:flutter_video_calls/views/sign_up/controller/signup_x.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
 import 'package:ui/style/style.dart';
@@ -18,12 +18,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _verifyController = getIt.get<VerifyController>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _signUpController = SignUpController(authRepository: getIt.get());
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +76,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  _phoneNumberInput() =>
-      Container(
+  _phoneNumberInput() => Container(
         height: 56,
         child: Row(
           children: [
             GestureDetector(
               onTap: () async {
                 final country = await showCountrySelectorDialog();
-                if (country != null) _verifyController.country.value = country;
+                if (country != null) _signUpController.country.value = country;
               },
               child: Container(
                 height: 56,
@@ -98,7 +92,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4.0)),
-                child: CountryFlag(),
+                child: ObxValue<Rx<Country>>(
+                  (country) => CountryFlag(country.value),
+                  _signUpController.country,
+                ),
               ),
             ),
             Expanded(
@@ -111,12 +108,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: TextFormField(
                   autofocus: false,
                   onChanged: (value) {
-                    _verifyController.rawPhoneNumber.value = value;
+                    _signUpController.rawPhoneNumber.value = value;
                   },
                   validator: (value) {
                     if (value?.isEmpty == true) {
                       return S.current.phone_number_is_not_empty;
-                  }
+                    }
                   },
                   cursorColor: mColorTextHint,
                   style: TextStyle(
@@ -140,26 +137,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       );
 
-  _continueVerifyCode() =>
-      Container(
+  _continueVerifyCode() => Container(
         margin: EdgeInsets.symmetric(vertical: 18.0),
         child: Obx(
-              () =>
-              ButtonRadius(
-                height: 55.0,
-                label: S.current.next,
-                background: mColorPrimary,
-                textColor: Colors.white,
-                enable: _verifyController.phoneNumberIsCorrect(),
-                callback: () {
-                  _verifyController.signUp();
-                },
-              ),
+          () => ButtonRadius(
+            height: 55.0,
+            label: S.current.next,
+            background: mColorPrimary,
+            textColor: Colors.white,
+            enable: _signUpController.phoneNumberIsCorrect,
+            callback: () {
+              _signUpController.signUp();
+            },
+          ),
         ),
       );
 
-  Future<Country?> showCountrySelectorDialog() =>
-      Get.dialog(
+  Future<Country?> showCountrySelectorDialog() => Get.dialog(
         AlertDialog(
           content: Container(
             width: double.maxFinite,

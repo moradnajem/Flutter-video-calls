@@ -3,19 +3,20 @@ import 'package:configuration/data/exceptions/api_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_video_calls/data/account/model/account_response.dart';
 import 'package:flutter_video_calls/data/auth/auth_api.dart';
-import 'package:flutter_video_calls/data/auth/model/get_verify_code_request.dart';
-import 'package:flutter_video_calls/data/auth/model/signin_request.dart';
+import 'package:flutter_video_calls/data/auth/model/send_verify_code_request.dart';
+import 'package:flutter_video_calls/data/auth/model/send_verify_type.dart';
 import 'package:flutter_video_calls/data/auth/model/verify_code_request.dart';
-
 
 class AuthRepository {
   AuthApi? api;
 
   AuthRepository({this.api});
 
-  Future<BaseResponse?> signUp(GetVerifyCodeRequest request) async {
+  Future<BaseResponse?> sendVerifyCode(
+      SendVerifyType sendVerifyType, SendVerifyCodeRequest request) async {
     try {
-      final response = await api?.signUnWithPhoneNUmber(request);
+      final response = await api?.sendVerifyCode(
+          SendVerifyTypeEnumMap[sendVerifyType], request);
       return response;
     } on DioError catch (dioError) {
       throw ApiException(exception: dioError);
@@ -24,9 +25,10 @@ class AuthRepository {
     }
   }
 
-  Future<AccountResponse?> signIn(SignInRequest request) async {
+  Future<AccountResponse?> registrationVerification(
+      VerifyCodeRequest request) async {
     try {
-      final response = await api?.signInWithPhoneNumber(request);
+      final response = await api?.registrationVerification(request);
       return response;
     } on DioError catch (dioError) {
       throw ApiException(exception: dioError);
@@ -35,9 +37,9 @@ class AuthRepository {
     }
   }
 
-  Future<AccountResponse?> verifyCode(VerifyCodeRequest request) async {
+  Future<AccountResponse?> loginVerification(VerifyCodeRequest request) async {
     try {
-      final response = await api?.verifyCode(request);
+      final response = await api?.loginVerification(request);
       return response;
     } on DioError catch (dioError) {
       throw ApiException(exception: dioError);

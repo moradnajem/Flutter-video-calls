@@ -14,15 +14,16 @@ class _AuthApi implements AuthApi {
   String? baseUrl;
 
   @override
-  Future<BaseResponse?>? signUnWithPhoneNUmber(request) async {
+  Future<BaseResponse?>? sendVerifyCode(sendVerifyType, request) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'type': sendVerifyType};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, 'auth/verify/phone',
+                .compose(_dio.options, 'auth/verify/send',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
@@ -31,7 +32,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<AccountResponse?>? verifyCode(request) async {
+  Future<AccountResponse?>? registrationVerification(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -39,7 +40,7 @@ class _AuthApi implements AuthApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AccountResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, 'auth/verify/code',
+                .compose(_dio.options, 'auth/verify/register',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
@@ -48,7 +49,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<AccountResponse?>? signInWithPhoneNumber(request) async {
+  Future<AccountResponse?>? loginVerification(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -56,7 +57,7 @@ class _AuthApi implements AuthApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AccountResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, 'auth/login/phone',
+                .compose(_dio.options, 'auth/verify/login',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =

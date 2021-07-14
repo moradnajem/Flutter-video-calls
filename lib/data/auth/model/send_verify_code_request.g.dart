@@ -1,31 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_verify_code_request.dart';
+part of 'send_verify_code_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetVerifyCodeRequest _$GetVerifyCodeRequestFromJson(Map<String, dynamic> json) {
-  return GetVerifyCodeRequest(
-    json['email'] as String?,
-    json['phoneNumber'] as String?,
-    json['dialCode'] as String?,
-    json['alpha2Code'] as String?,
-    json['alpha3Code'] as String?,
-    _$enumDecodeNullable(_$VerifyTypeEnumMap, json['type']),
+SendVerifyCodeRequest _$SendVerifyCodeRequestFromJson(
+    Map<String, dynamic> json) {
+  return SendVerifyCodeRequest(
+    email: json['email'] as String?,
+    phoneNumber: json['phoneNumber'] as String?,
+    dialCode: json['dialCode'] as String?,
+    alpha2Code: json['alpha2Code'] as String?,
+    alpha3Code: json['alpha3Code'] as String?,
+    typeCode: _$enumDecodeNullable(_$VerifyTypeCodeEnumMap, json['typeCode']),
   );
 }
 
-Map<String, dynamic> _$GetVerifyCodeRequestToJson(
-        GetVerifyCodeRequest instance) =>
+Map<String, dynamic> _$SendVerifyCodeRequestToJson(
+        SendVerifyCodeRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'dialCode': instance.dialCode,
       'alpha2Code': instance.alpha2Code,
       'alpha3Code': instance.alpha3Code,
-      'type': _$VerifyTypeEnumMap[instance.type],
+      'typeCode': _$VerifyTypeCodeEnumMap[instance.typeCode],
     };
 
 K _$enumDecode<K, V>(
@@ -65,8 +66,8 @@ K? _$enumDecodeNullable<K, V>(
   return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
-const _$VerifyTypeEnumMap = {
-  VerifyType.PHONE_NUMBER: 'PHONE_NUMBER',
-  VerifyType.EMAIL: 'EMAIL',
-  VerifyType.PASSWORD: 'PASSWORD',
+const _$VerifyTypeCodeEnumMap = {
+  VerifyTypeCode.PHONE_NUMBER: 'PHONE_NUMBER',
+  VerifyTypeCode.EMAIL: 'EMAIL',
+  VerifyTypeCode.PASSWORD: 'PASSWORD',
 };

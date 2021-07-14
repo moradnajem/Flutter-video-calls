@@ -1,5 +1,5 @@
 import 'package:flutter_video_calls/data/account/model/role.dart';
-import 'package:flutter_video_calls/data/auth/model/verify_type.dart';
+import 'package:flutter_video_calls/data/auth/model/verify_type_code.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'verify_code_request.g.dart';
@@ -12,7 +12,7 @@ class VerifyCodeRequest {
     required this.dialCode,
     required this.alpha2Code,
     this.alpha3Code,
-    required this.type,
+    required this.typeCode,
     required this.verifyCode,
     this.deviceName,
     this.deviceId,
@@ -30,8 +30,8 @@ class VerifyCodeRequest {
   String? alpha2Code;
   @JsonKey(name: 'alpha3Code')
   String? alpha3Code;
-  @JsonKey(name: 'type')
-  VerifyType? type;
+  @JsonKey(name: 'typeCode')
+  VerifyTypeCode? typeCode;
   @JsonKey(name: 'verifyCode')
   int? verifyCode;
 
