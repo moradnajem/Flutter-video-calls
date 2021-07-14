@@ -1,9 +1,11 @@
-import 'package:camera/camera.dart';
+import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
+import 'package:configuration/utility/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_video_calls/main.dart';
+import 'package:flutter_video_calls/data/webrtc/signaling.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
 import 'package:flutter_video_calls/views/sign_up/signup_route.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:get/get.dart';
 import 'package:ui/buttons/button_radius.dart';
 import 'package:ui/style/style.dart';
@@ -17,48 +19,44 @@ class IntroductionScreen extends StatefulWidget {
 
 class _IntroductionScreenState extends State<IntroductionScreen>
     with WidgetsBindingObserver {
-  CameraController? controller;
+  final _localRenderer = getIt<RTCVideoRenderer>();
+  final _signaling = getIt<Signaling>();
 
   @override
   void initState() {
+    initRenderers();
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    onNewCameraSelected();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      onNewCameraSelected();
-    } else if (state == AppLifecycleState.paused) {
-      controller?.dispose();
-    }
-  }
-
-  void onNewCameraSelected() async {
-    if (controller != null) await controller?.dispose();
-
-    controller = CameraController(
-        cameras[cameras.length > 0 ? 1 : 0], ResolutionPreset.max);
-    controller?.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
+  initRenderers() async {
+    _signaling.onLocalStream = ((_, stream) {
+      _localRenderer.srcObject = stream;
+    });
+    afterBuild(() async {
+      await _localRenderer.initialize();
+      await _signaling.connect();
+      _localRenderer.srcObject = _signaling.localStream;
       setState(() {});
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (controller == null || controller?.value.isInitialized == false) {
-      return Container();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _signaling.localStream?.getVideoTracks().first.enabled = true;
+    } else if (state == AppLifecycleState.paused) {
+      _signaling.localStream?.getVideoTracks().first.enabled = false;
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           // camera
-          CameraPreview(controller!),
+          RTCVideoView(_localRenderer, mirror: true),
           // Scrim
           Opacity(
             opacity: 0.8,
@@ -136,9 +134,10 @@ class _IntroductionScreenState extends State<IntroductionScreen>
   }
 
   @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
+  void deactivate() {
+    WidgetsBinding.instance?.removeObserver(this);
+    _localRenderer.dispose();
+    super.deactivate();
   }
 }
 

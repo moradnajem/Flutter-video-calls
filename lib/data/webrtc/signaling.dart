@@ -1,4 +1,5 @@
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:get/get.dart' as getx;
 
 typedef void StreamStateCallback(Session? session, MediaStream stream);
 
@@ -42,9 +43,8 @@ class Signaling {
       'audio': true,
       'video': {
         'mandatory': {
-          'minWidth':
-              '640', // Provide your own width, height and frame rate here
-          'minHeight': '480',
+          'minWidth': getx.Get.size.width.toInt(),
+          'minHeight': getx.Get.size.height.toInt(),
           'minFrameRate': '30',
         },
         'facingMode': 'user',
@@ -60,7 +60,7 @@ class Signaling {
     return navigator.mediaDevices.getUserMedia(mediaConstraints);
   }
 
-  connect() async{
+  connect() async {
     localStream = await createStream();
   }
 
