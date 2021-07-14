@@ -7,16 +7,14 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:configuration/route/route_define.dart';
 import 'package:configuration/utility/logging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' ;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_video_calls/data/country/repositories/country_repository.dart';
-import 'package:flutter_video_calls/data/introduction/introduction_pref.dart';
 import 'package:flutter_video_calls/di/injection/injection.dart';
 import 'package:flutter_video_calls/manifest.dart';
 import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
-import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:flutter_video_calls/views/introduction/introduction_route.dart';
-import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
 import 'package:get/get.dart';
 import 'package:ui/style/style.dart';
 
@@ -28,6 +26,9 @@ List<CameraDescription> cameras = [];
 class Main extends Env {
   @override
   FutureOr<StatefulWidget> onCreate() async {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     // Avoid errors caused by flutter upgrade.
     WidgetsFlutterBinding.ensureInitialized();
     Style.styleDefault();
@@ -62,7 +63,7 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   final route =
-      SessionPref.isSessionValid() ?  CallOutRoute.ID : IntroductionRoute.ID;
+      SessionPref.isSessionValid() ? CallOutRoute.ID : IntroductionRoute.ID ;
 
   @override
   Widget build(BuildContext context) {

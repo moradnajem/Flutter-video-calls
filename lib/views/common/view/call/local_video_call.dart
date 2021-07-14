@@ -1,4 +1,7 @@
+import 'package:configuration/di/di_module.dart';
+import 'package:configuration/utility/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_video_calls/data/webrtc/signaling.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 class LocalVideoCall extends StatefulWidget {
@@ -9,12 +12,31 @@ class LocalVideoCall extends StatefulWidget {
 }
 
 class _LocalVideoCallState extends State<LocalVideoCall> {
-  RTCVideoRenderer _localRenderer = RTCVideoRenderer();
+  final _localRenderer = getIt<RTCVideoRenderer>();
+  final _signaling = getIt<Signaling>();
 
   @override
   void initState() {
-    _localRenderer.initialize();
+    initRenderers();
     super.initState();
+  }
+
+  initRenderers() async {
+    _signaling.onLocalStream = ((_, stream) {
+      _localRenderer.srcObject = stream;
+    });
+    afterBuild(() async {
+      await _localRenderer.initialize();
+      await _signaling.connect();
+      _localRenderer.srcObject = _signaling.localStream;
+      setState(() {});
+    });
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    _localRenderer.dispose();
   }
 
   @override

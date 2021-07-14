@@ -13,8 +13,8 @@ import 'package:flutter_video_calls/data/auth/model/verify_code_request.dart';
 import 'package:flutter_video_calls/data/auth/model/verify_type_code.dart';
 import 'package:flutter_video_calls/data/auth/repositories/auth_repository.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
+import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
 import 'package:flutter_video_calls/views/dialogs/dialog.dart';
-import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:get/get.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 
@@ -49,7 +49,8 @@ class VerifyController extends GetxController {
   phoneNumberWithAlpha2Code() async {
     normalizedNumber.value = await PhoneNumberUtil.normalizePhoneNumber(
             phoneNumber: rawPhoneNumber.value,
-            isoCode: country.value.alpha2Code) ?? '';
+            isoCode: country.value.alpha2Code) ??
+        '';
   }
 
   verification(int code) async {
@@ -102,7 +103,7 @@ class VerifyController extends GetxController {
       if (response != null && response.account != null) {
         await accountRepository.saveAccount(response.account!, response.token);
         reset();
-        Get.offAllNamed(HomeRoute.ID);
+        CallOutRoute.push();
       } else {
         reset();
         Get.back();

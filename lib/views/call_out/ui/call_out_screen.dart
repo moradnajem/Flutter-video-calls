@@ -12,21 +12,28 @@ class _CallOutScreenState extends State<CallOutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: Stack(
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Positioned(
-            child: LocalVideoCall(),
-            right: 10,
-            top: 10,
-          )
+          Container(
+            child: Icon(Icons.arrow_back_ios, color: Colors.black),
+            margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                Positioned(
+                  child: LocalVideoCall(),
+                  right: 10,
+                  top: 10,
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
