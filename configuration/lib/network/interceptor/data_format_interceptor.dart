@@ -16,12 +16,18 @@ class DataFormatInterceptor extends InterceptorsWrapper {
           type: DioErrorType.response));
       return;
     }
-    if (response.statusCode == 404) {
+
+    if (response.statusCode != HttpStatus.ok) {
       handler.reject(DioError(
           requestOptions: response.requestOptions,
-          response: Response<BaseResponse?>(
+          response: Response(
+            headers: response.headers,
             statusCode: response.statusCode,
             requestOptions: response.requestOptions,
+            isRedirect: response.isRedirect,
+            statusMessage: response.statusMessage,
+            redirects: response.redirects,
+            extra: response.extra,
           ),
           type: DioErrorType.other));
       return;

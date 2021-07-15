@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:configuration/data/common/base_response.dart';
 import 'package:configuration/data/common/response_code.dart';
 import 'package:configuration/generated/l10n.dart';
-import 'package:configuration/utility/logging.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
@@ -56,7 +55,6 @@ class ApiException {
 
   ApiException({required DioError exception}) {
     this.exception = exception;
-    Log.info("Tagggggggggggggggggggggggg", "exception.type: ${exception.type}");
     switch (exception.type) {
       case DioErrorType.response:
         {
@@ -101,9 +99,10 @@ class ApiException {
               break;
             default:
               {
-                Log.info("Tagggggggggggggggggggggggg", "exception.statusCode: ${exception.response?.statusCode}");
-                if (exception.response?.statusCode == 404) {
+                if (exception.response?.statusCode == HttpStatus.notFound) {
                   errorMessage = S.current.server_not_found;
+                } if (exception.response?.statusCode == HttpStatus.serviceUnavailable) {
+                  errorMessage = S.current.server_unknown_error;
                 } else if (exception.error is SocketException) {
                   errorMessage = S.current.connection_problem;
                 } else if (exception.error is HttpException) {

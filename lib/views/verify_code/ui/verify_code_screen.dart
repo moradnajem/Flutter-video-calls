@@ -65,6 +65,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
     });
     _controller?.forward();
     afterBuild(() {
+      _verifyController.phoneNumberWithAlpha2Code();
       _verifyController.codeExpireCountDown.value = 30;
     });
     super.initState();
@@ -108,13 +109,15 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                     S.current.enter_verify_code,
                     style: TextStyle(color: mColorBlack, fontSize: 16),
                   ),
-                  Text(
-                    _verifyController.country.alpha2Code,
-                    style: TextStyle(
-                        color: mColorBlack,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  ObxValue<RxString>(
+                      (normalizedNumber) => Text(
+                            normalizedNumber.value,
+                            style: TextStyle(
+                                color: mColorBlack,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                      _verifyController.normalizedNumber),
                   SizedBox(
                     height: mSpacing,
                   ),
