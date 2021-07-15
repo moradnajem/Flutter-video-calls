@@ -1,5 +1,4 @@
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:get/get.dart' as getx;
 
 typedef void StreamStateCallback(Session? session, MediaStream stream);
 
@@ -43,9 +42,12 @@ class Signaling {
       'audio': true,
       'video': {
         'mandatory': {
-          'minWidth': getx.Get.size.width.toInt(),
-          'minHeight': getx.Get.size.height.toInt(),
+          'minWidth': '1280',
+          'maxWidth': '1280',
+          'minHeight': '720',
+          'maxHeight': '720',
           'minFrameRate': '30',
+          'minAspectRatio': '1.77'
         },
         'facingMode': 'user',
         'optional': [],

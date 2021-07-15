@@ -27,7 +27,7 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen>
     with TickerProviderStateMixin {
-  final _verifyController =  VerifyController(
+  final _verifyController = VerifyController(
     authRepository: getIt.get(),
     accountRepository: getIt.get(),
   );
@@ -39,7 +39,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
   @override
   void initState() {
     _verifyController.rawPhoneNumber.value = widget.phoneNumber ?? "";
-    _verifyController.country.value = widget.country!;
+    _verifyController.country = widget.country!;
     _verifyController.sendVerifyType = widget.sendVerifyType!;
 
     _controller = AnimationController(
@@ -65,7 +65,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
     });
     _controller?.forward();
     afterBuild(() {
-      _verifyController.phoneNumberWithAlpha2Code();
       _verifyController.codeExpireCountDown.value = 30;
     });
     super.initState();
@@ -109,15 +108,13 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                     S.current.enter_verify_code,
                     style: TextStyle(color: mColorBlack, fontSize: 16),
                   ),
-                  ObxValue<RxString>(
-                      (normalizedNumber) => Text(
-                            normalizedNumber.value,
-                            style: TextStyle(
-                                color: mColorBlack,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                      _verifyController.normalizedNumber),
+                  Text(
+                    _verifyController.country.alpha2Code,
+                    style: TextStyle(
+                        color: mColorBlack,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(
                     height: mSpacing,
                   ),

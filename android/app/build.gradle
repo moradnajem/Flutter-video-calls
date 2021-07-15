@@ -68,6 +68,9 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
             signingConfig signingConfigs.release
         }
     }

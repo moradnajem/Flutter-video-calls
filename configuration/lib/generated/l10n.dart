@@ -350,11 +350,21 @@ class S {
     );
   }
 
-  /// `Lỗi không kết nối được với máy chủ. Vui lòng quay lại sau.`
+  /// `Máy chủ đang gặp vấn đề. Vui lòng quay lại sau.`
   String get server_unknown_error {
     return Intl.message(
-      'Lỗi không kết nối được với máy chủ. Vui lòng quay lại sau.',
+      'Máy chủ đang gặp vấn đề. Vui lòng quay lại sau.',
       name: 'server_unknown_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Không kết nối được với máy chủ. Vui lòng quay lại sau.`
+  String get server_not_found {
+    return Intl.message(
+      'Không kết nối được với máy chủ. Vui lòng quay lại sau.',
+      name: 'server_not_found',
       desc: '',
       args: [],
     );

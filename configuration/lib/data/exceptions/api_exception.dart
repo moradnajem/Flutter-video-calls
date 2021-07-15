@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:configuration/data/common/base_response.dart';
 import 'package:configuration/data/common/response_code.dart';
 import 'package:configuration/generated/l10n.dart';
+import 'package:configuration/utility/logging.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
@@ -55,6 +56,7 @@ class ApiException {
 
   ApiException({required DioError exception}) {
     this.exception = exception;
+    Log.info("Tagggggggggggggggggggggggg", "exception.type: ${exception.type}");
     switch (exception.type) {
       case DioErrorType.response:
         {
@@ -62,7 +64,7 @@ class ApiException {
           try {
             if (data is BaseResponse) {
               errorMessage = data.code == ResponseCode.UNAUTHORIZED ||
-                  data.code == ResponseCode.FORBIDDEN
+                      data.code == ResponseCode.FORBIDDEN
                   ? S.current.invalid_credentials
                   : data.code?.message ?? data.error;
 
@@ -99,7 +101,10 @@ class ApiException {
               break;
             default:
               {
-                if (exception.error is SocketException) {
+                Log.info("Tagggggggggggggggggggggggg", "exception.statusCode: ${exception.response?.statusCode}");
+                if (exception.response?.statusCode == 404) {
+                  errorMessage = S.current.server_not_found;
+                } else if (exception.error is SocketException) {
                   errorMessage = S.current.connection_problem;
                 } else if (exception.error is HttpException) {
                   errorMessage = S.current.connection_problem;

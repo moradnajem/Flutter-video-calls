@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:configuration/data/common/base_response.dart';
 import 'package:dio/dio.dart';
 
@@ -15,6 +16,17 @@ class DataFormatInterceptor extends InterceptorsWrapper {
           type: DioErrorType.response));
       return;
     }
+    if (response.statusCode == 404) {
+      handler.reject(DioError(
+          requestOptions: response.requestOptions,
+          response: Response<BaseResponse?>(
+            statusCode: response.statusCode,
+            requestOptions: response.requestOptions,
+          ),
+          type: DioErrorType.other));
+      return;
+    }
+
     super.onResponse(response, handler);
   }
 }

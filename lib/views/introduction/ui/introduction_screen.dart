@@ -55,8 +55,26 @@ class _IntroductionScreenState extends State<IntroductionScreen>
     return Scaffold(
       body: Stack(
         children: [
-          // camera
-          RTCVideoView(_localRenderer, mirror: true),
+          Positioned.fill(
+            child: OrientationBuilder(
+              builder: (context, orientation) {
+                return Center(
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: RTCVideoView(
+                      _localRenderer,
+                      objectFit:
+                          RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                      mirror: true,
+                    ),
+                    decoration: BoxDecoration(color: Colors.black54),
+                  ),
+                );
+              },
+            ),
+          ),
           // Scrim
           Opacity(
             opacity: 0.8,
@@ -144,7 +162,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
 class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = new Paint()..color = mColorPrimaryLight;
+    Paint paint = Paint()..color = mColorPrimaryLight;
     // create a path
     var path = Path();
     path.moveTo(0.0, size.height);

@@ -120,8 +120,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "send_timeout": MessageLookupByLibrary.simpleMessage(
             "Thời gian kết nối kéo dài. Vui lòng thử lại"),
         "server_error": MessageLookupByLibrary.simpleMessage("Lỗi."),
+        "server_not_found": MessageLookupByLibrary.simpleMessage(
+            "Không kết nối được với máy chủ. Vui lòng quay lại sau."),
         "server_unknown_error": MessageLookupByLibrary.simpleMessage(
-            "Lỗi không kết nối được với máy chủ. Vui lòng quay lại sau."),
+            "Máy chủ đang gặp vấn đề. Vui lòng quay lại sau."),
         "unknown_error":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định."),
         "what_is_phone_number": MessageLookupByLibrary.simpleMessage(

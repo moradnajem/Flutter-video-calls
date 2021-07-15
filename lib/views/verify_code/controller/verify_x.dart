@@ -16,7 +16,6 @@ import 'package:flutter_video_calls/data/country/model/country_model.dart';
 import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
 import 'package:flutter_video_calls/views/dialogs/dialog.dart';
 import 'package:get/get.dart';
-import 'package:libphonenumber/libphonenumber.dart';
 
 class VerifyController extends GetxController {
   final AuthRepository authRepository;
@@ -34,24 +33,15 @@ class VerifyController extends GetxController {
   static const int EXPIRE_COUNT_DOWN = 30;
 
   RxString rawPhoneNumber = ''.obs;
-  RxString normalizedNumber = ''.obs;
   RxInt codeExpireCountDown = EXPIRE_COUNT_DOWN.obs;
   RxInt verifyIncorrectCount = MAX_INCORRECT_COUNT.obs;
 
-  Rx<Country> country = Country(
-          name: "Vietnam",
-          alpha2Code: "VN",
-          alpha3Code: "VNM",
-          dialCode: "+84",
-          flagUri: 'assets/flags/vn.png')
-      .obs;
-
-  phoneNumberWithAlpha2Code() async {
-    normalizedNumber.value = await PhoneNumberUtil.normalizePhoneNumber(
-            phoneNumber: rawPhoneNumber.value,
-            isoCode: country.value.alpha2Code) ??
-        '';
-  }
+  Country country = Country(
+      name: "Vietnam",
+      alpha2Code: "VN",
+      alpha3Code: "VNM",
+      dialCode: "+84",
+      flagUri: 'assets/flags/vn.png');
 
   verification(int code) async {
     if (isRequesting) return;
@@ -77,9 +67,9 @@ class VerifyController extends GetxController {
           ? await authRepository.registrationVerification(VerifyCodeRequest(
               email: null,
               phoneNumber: rawPhoneNumber.value,
-              dialCode: country.value.dialCode,
-              alpha2Code: country.value.alpha2Code,
-              alpha3Code: country.value.alpha3Code,
+              dialCode: country.dialCode,
+              alpha2Code: country.alpha2Code,
+              alpha3Code: country.alpha3Code,
               typeCode: VerifyTypeCode.PHONE_NUMBER,
               verifyCode: code,
               deviceName: deviceName,
@@ -89,9 +79,9 @@ class VerifyController extends GetxController {
           : await authRepository.loginVerification(VerifyCodeRequest(
               email: null,
               phoneNumber: rawPhoneNumber.value,
-              dialCode: country.value.dialCode,
-              alpha2Code: country.value.alpha2Code,
-              alpha3Code: country.value.alpha3Code,
+              dialCode: country.dialCode,
+              alpha2Code: country.alpha2Code,
+              alpha3Code: country.alpha3Code,
               typeCode: VerifyTypeCode.PHONE_NUMBER,
               verifyCode: code,
               deviceName: deviceName,
@@ -139,9 +129,9 @@ class VerifyController extends GetxController {
         SendVerifyCodeRequest(
             email: null,
             phoneNumber: rawPhoneNumber.value,
-            dialCode: country.value.dialCode,
-            alpha2Code: country.value.alpha2Code,
-            alpha3Code: country.value.alpha3Code,
+            dialCode: country.dialCode,
+            alpha2Code: country.alpha2Code,
+            alpha3Code: country.alpha3Code,
             typeCode: VerifyTypeCode.PHONE_NUMBER),
       );
       Get.back();
