@@ -44,8 +44,39 @@ class _LocalVideoCallState extends State<LocalVideoCall> {
     return Container(
       width: 90.0,
       height: 120.0,
-      child: RTCVideoView(_localRenderer, mirror: true),
-      decoration: BoxDecoration(color: Colors.black54),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 4,
+            spreadRadius: 5,
+            offset: Offset(0, 0), // Shadow position
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: RTCVideoView(_localRenderer,
+                  objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                  mirror: true),
+            ),
+          ),
+          Positioned(
+              top: 6,
+              right: 6,
+              child: Icon(
+                Icons.zoom_out_map,
+                size: 18,
+                color: Colors.white,
+              ))
+        ],
+      ),
     );
   }
 }
