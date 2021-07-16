@@ -49,9 +49,9 @@ class _LocalVideoCallState extends State<LocalVideoCall> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black,
+            color: Colors.black12,
             blurRadius: 4,
-            spreadRadius: 5,
+            spreadRadius: 2,
             offset: Offset(0, 0), // Shadow position
           ),
         ],
