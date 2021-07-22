@@ -18,8 +18,10 @@ abstract class AuthApi {
   );
 
   @POST('auth/verify/register')
-  Future<AccountResponse?>? registrationVerification(@Body() VerifyCodeRequest request);
+  Future<AccountResponse?>? registrationVerification(
+      @Body() VerifyCodeRequest request);
 
   @POST('auth/verify/login')
-  Future<AccountResponse?>? loginVerification(@Body() VerifyCodeRequest request);
+  Future<AccountResponse?>? loginVerification(
+      @Body() VerifyCodeRequest request);
 }

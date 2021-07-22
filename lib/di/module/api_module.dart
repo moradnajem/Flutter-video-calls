@@ -19,7 +19,7 @@ class ApiModule extends DIModule {
     getIt.registerSingleton(AccountApi(dio, baseUrl: dio.options.baseUrl));
   }
 
- FutureOr<Dio> _setup() async {
+  FutureOr<Dio> _setup() async {
     final options = BaseOptions(
       connectTimeout: BuildConfig.get()?.connectTimeout,
       receiveTimeout: BuildConfig.get()?.receiveTimeout,

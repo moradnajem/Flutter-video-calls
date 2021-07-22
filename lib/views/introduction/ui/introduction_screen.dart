@@ -3,12 +3,13 @@ import 'package:configuration/generated/l10n.dart';
 import 'package:configuration/utility/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/data/webrtc/signaling.dart';
+import 'package:flutter_video_calls/views/common/buttons/button_radius.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
 import 'package:flutter_video_calls/views/sign_up/signup_route.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:get/get.dart';
-import 'package:ui/buttons/button_radius.dart';
-import 'package:ui/style/style.dart';
+import 'package:flutter_video_calls/style/style.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IntroductionScreen extends StatefulWidget {
   const IntroductionScreen({Key? key}) : super(key: key);
@@ -60,7 +61,6 @@ class _IntroductionScreenState extends State<IntroductionScreen>
               builder: (context, orientation) {
                 return Center(
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: RTCVideoView(
@@ -83,29 +83,25 @@ class _IntroductionScreenState extends State<IntroductionScreen>
             ),
           ),
           Positioned(
-            top: 100,
+            top: 100.h,
             left: 0,
             right: 0,
             child: Center(
-              child: Text(
-                S.current.app_name,
-                style: TextStyle(color: mDarkOrange, fontSize: 24.0),
+              child: Column(
+                children: [
+                  Text(S.current.app_name,
+                      style: mTitleStyle.copyWith(
+                          color: mDarkOrange, fontWeight: FontWeight.bold)),
+                  Text(
+                    S.current.app_description,
+                    style: mPrimaryTextStyle.copyWith(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
           ),
 
-          Positioned(
-            top: 140,
-            left: 20,
-            right: 20,
-            child: Center(
-              child: Text(
-                S.current.app_description,
-                style: TextStyle(color: Colors.white, fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
           LinearGradientMask(
             child: CustomPaint(
               painter: CurvePainter(),
@@ -122,7 +118,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
             child: Column(
               children: [
                 ButtonRadius(
-                  height: 55.0,
+                  radius: 50,
                   label: S.current.login,
                   background: mColorPrimary,
                   textColor: Colors.white,
@@ -134,7 +130,7 @@ class _IntroductionScreenState extends State<IntroductionScreen>
                   height: mSpacing,
                 ),
                 ButtonRadius(
-                  height: 55.0,
+                  radius: 50,
                   label: S.current.or_register_now,
                   callback: () {
                     Get.toNamed(SignUpRoute.ID);

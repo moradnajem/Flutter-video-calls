@@ -101,7 +101,9 @@ class ApiException {
               {
                 if (exception.response?.statusCode == HttpStatus.notFound) {
                   errorMessage = S.current.server_not_found;
-                } if (exception.response?.statusCode == HttpStatus.serviceUnavailable) {
+                }
+                if (exception.response?.statusCode ==
+                    HttpStatus.serviceUnavailable) {
                   errorMessage = S.current.server_unknown_error;
                 } else if (exception.error is SocketException) {
                   errorMessage = S.current.connection_problem;

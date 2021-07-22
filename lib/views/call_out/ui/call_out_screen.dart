@@ -1,8 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_video_calls/views/common/view/call/local_video_call.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_video_calls/style/style.dart';
+import 'package:flutter_video_calls/views/common/buttons/button_circle.dart';
+import 'package:flutter_video_calls/views/common/call/local_video_call.dart';
+import 'package:flutter_video_calls/views/common/text/shadow_text.dart';
 import 'package:get/get.dart';
-import 'package:ui/style/style.dart';
 
 class CallOutScreen extends StatefulWidget {
   const CallOutScreen({Key? key}) : super(key: key);
@@ -33,16 +38,31 @@ class _CallOutScreenState extends State<CallOutScreen> {
         child: Expanded(
           child: Stack(
             children: [
-              Container(
-                child: Icon(Icons.arrow_back_ios, color: Colors.black),
-                margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              ),
-              Positioned.fill(child: Image.asset("assets/images/test_call.jpg", fit: BoxFit.fitHeight,)),
+              // Remote video
+              Positioned.fill(
+                  child: Image.asset(
+                "assets/images/test_call.jpg",
+                fit: BoxFit.fitHeight,
+              )),
+              // Local video
               Positioned(
                 child: LocalVideoCall(),
-                right: 10,
-                top: 50,
+                right: mSpacing,
+                top: mSpacing,
               ),
+              // Name and timer
+              Positioned(
+                left: 20.w,
+                bottom: 90.h,
+                child: _layoutUserNameAndTimer(),
+              ),
+
+              Positioned(
+                right: 20.w,
+                bottom: 90.h,
+                child: _voiceAndVideoControl(),
+              ),
+              // action call
               Positioned(
                 bottom: 0,
                 right: 0,
@@ -51,11 +71,10 @@ class _CallOutScreenState extends State<CallOutScreen> {
                   width: double.infinity,
                   child: CustomPaint(
                     painter: CurvePainter(),
-                    size: Size(Get.width, 150),
+                    size: Size(Get.width, 150.h),
                   ),
                 ),
               ),
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -71,48 +90,193 @@ class _CallOutScreenState extends State<CallOutScreen> {
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.only(bottom: 150*0.16),
+                  margin: EdgeInsets.only(bottom: 150.h * 0.16),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Container(
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.all(20.w),
                         child: Icon(
-                          Icons.call,
-                          size: 30,
+                          Icons.video_call,
+                          color: Colors.white,
+                          size: 36.w,
                         )),
                   ),
                 ),
               ),
-
               Positioned(
-                bottom: 20,
-                left: 30,
+                bottom: 150.h * 0.05,
+                left: 12.w,
                 child: Row(
                   children: [
-                    Icon(Icons.arrow_circle_up, color: Colors.white,size: 25,),
-                    SizedBox(width: 20,),
-                    Icon(Icons.wallet_giftcard, color: Colors.white,size: 25,)
+                    ButtonCircle(
+                      color: mBackgroundActionCall,
+                      icon: Icon(
+                        Icons.settings_suggest,
+                        color: Colors.white,
+                        size: 24.w,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    ButtonCircle(
+                      color: mBackgroundActionCall,
+                      icon: Icon(
+                        Icons.wallet_giftcard,
+                        color: Colors.white,
+                        size: 24.w,
+                      ),
+                    ),
                   ],
                 ),
               ),
-
               Positioned(
-                bottom: 20,
-                right: 30,
+                bottom: 150.h * 0.05,
+                right: 12.w,
                 child: Row(
                   children: [
-                    Icon(Icons.chat, color: Colors.white,size: 25,),
-                    SizedBox(width: 20,),
-                    Icon(Icons.more_vert, color: Colors.white,size: 25,)
+                    ButtonCircle(
+                      color: mBackgroundActionCall,
+                      icon: Icon(
+                        Icons.chat,
+                        color: Colors.white,
+                        size: 24.w,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    ButtonCircle(
+                      color: mBackgroundActionCall,
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                        size: 24.w,
+                      ),
+                    ),
                   ],
                 ),
-              )
+              ),
+              // Action back
+              Container(
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0.w),
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2.w,
+                  ),
+                ),
+                child: Icon(Icons.arrow_back_ios, color: mActionColor),
+                margin: EdgeInsets.all(mSpacing),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  _layoutUserNameAndTimer() => Container(
+        width: Get.size.width * 0.6,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ShadowText(
+              "Người gọi",
+              style: mPrimaryTextStyle.copyWith(color: Colors.white),
+            ),
+            ShadowText(
+              "Jennifer Aniston sdsa dasds adsadsad",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: mTitleStyle.copyWith(
+                  color: Colors.white,
+                  fontSize: mSizeH4,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: mSpacing,
+            ),
+            ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                child: Container(
+                  width: 98.w,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    color: mCallBackground.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(50),
+                    shape: BoxShape.rectangle,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 14.w,
+                        height: 14.h,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      Text(
+                        "22:15",
+                        style: mPrimaryTextStyle.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  _voiceAndVideoControl() => Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: ButtonCircle(
+                color: Colors.grey.withOpacity(0.5),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.white,
+                  size: 24.w,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 12.w,
+          ),
+          ButtonCircle(
+            color: Colors.white,
+            icon: Icon(
+              Icons.videocam_off_outlined,
+              color: mActionColor,
+              size: 24.w,
+            ),
+          ),
+          SizedBox(
+            height: 12.w,
+          ),
+          ButtonCircle(
+            color: Colors.white,
+            icon: Icon(
+              Icons.keyboard_voice,
+              color: mActionColor,
+              size: 24.w,
+            ),
+          ),
+        ],
+      );
 }
 
 class CurvePainter extends CustomPainter {
@@ -127,17 +291,24 @@ class CurvePainter extends CustomPainter {
     path.moveTo(0, size.height);
     path.lineTo(0, 0);
 
-    path.quadraticBezierTo(0,size.height*0.5,size.width*0.12,size.height*0.5);
+    path.quadraticBezierTo(
+        0, size.height * 0.51, size.width * 0.12, size.height * 0.51);
 
-    path.cubicTo(size.width*0.16,size.height*0.5,size.width*0.2,size.height*0.5,size.width*0.25,size.height*0.5);
-    path.cubicTo(size.width*0.3,size.height*0.5,size.width*0.35,size.height*0.5,size.width*0.37,size.height*0.66);
-    path.cubicTo(size.width*0.4,size.height,size.width*0.6,size.height,size.width*0.632,size.height*0.66);
-    path.cubicTo(size.width*0.65,size.height*0.5,size.width*0.71,size.height*0.5,size.width*0.75,size.height*0.5);
+    path.cubicTo(size.width * 0.16, size.height * 0.51, size.width * 0.2,
+        size.height * 0.51, size.width * 0.25, size.height * 0.51);
+    path.cubicTo(size.width * 0.3, size.height * 0.51, size.width * 0.35,
+        size.height * 0.51, size.width * 0.36, size.height * 0.66);
 
-    path.cubicTo(size.width*0.79,size.height*0.5,size.width*0.88,size.height*0.5,size.width*0.88,size.height*0.5);
-    path.quadraticBezierTo(size.width,size.height*0.5,size.width,0);
+    path.cubicTo(size.width * 0.4, size.height, size.width * 0.6, size.height,
+        size.width * 0.64, size.height * 0.66);
+    path.cubicTo(size.width * 0.654, size.height * 0.51, size.width * 0.70,
+        size.height * 0.51, size.width * 0.73, size.height * 0.51);
 
-    path.lineTo(size.width,size.height);
+    path.cubicTo(size.width * 0.79, size.height * 0.51, size.width * 0.88,
+        size.height * 0.51, size.width * 0.88, size.height * 0.51);
+    path.quadraticBezierTo(size.width, size.height * 0.51, size.width, 0);
+
+    path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.lineTo(0, 20);
 

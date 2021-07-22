@@ -14,7 +14,7 @@ import 'package:flutter_video_calls/data/auth/model/verify_type_code.dart';
 import 'package:flutter_video_calls/data/auth/repositories/auth_repository.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
 import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
-import 'package:flutter_video_calls/views/dialogs/dialog.dart';
+import 'package:flutter_video_calls/views/common/dialogs/dialog.dart';
 import 'package:get/get.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 
@@ -47,8 +47,8 @@ class VerifyController extends GetxController {
 
   phoneNumberWithAlpha2Code() async {
     normalizedNumber.value = await PhoneNumberUtil.normalizePhoneNumber(
-        phoneNumber: rawPhoneNumber.value,
-        isoCode: country.alpha2Code) ?? '';
+            phoneNumber: rawPhoneNumber.value, isoCode: country.alpha2Code) ??
+        '';
   }
 
   verification(int code) async {

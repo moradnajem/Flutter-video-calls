@@ -1,15 +1,14 @@
 import 'package:configuration/di/di_module.dart';
 import 'package:configuration/generated/l10n.dart';
-import 'package:configuration/utility/logging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
-import 'package:flutter_video_calls/views/common/view/coutries/widget/countries_search_list.dart';
-import 'package:flutter_video_calls/views/common/view/coutries/widget/country_flag.dart';
+import 'package:flutter_video_calls/style/style.dart';
+import 'package:flutter_video_calls/views/common/buttons/button_radius.dart';
+import 'package:flutter_video_calls/views/common/coutries/widget/countries_search_list.dart';
+import 'package:flutter_video_calls/views/common/coutries/widget/country_flag.dart';
 import 'package:flutter_video_calls/views/sign_in/controller/signin_x.dart';
 import 'package:get/get.dart';
-import 'package:ui/buttons/button_radius.dart';
-import 'package:ui/style/style.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -48,23 +47,21 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   Text(
                     S.current.what_is_phone_number,
-                    style: TextStyle(
-                        color: mColorBlack,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                    style: mTitleStyle.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: mSizeH4,
+                    ),
                   ),
                   SizedBox(
                     height: mSpacing,
                   ),
                   Text(
                     S.current.provide_phone_number_registered_before,
-                    style: TextStyle(
-                      color: mColorTextSecondary,
-                      fontSize: 14,
-                    ),
+                    style: mHintStyle,
                   ),
                   SizedBox(
-                    height: 40,
+                    height: 40.h,
                   ),
                   _phoneNumberInput(),
                 ],
@@ -77,23 +74,24 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  final phoneNumberInputSize = 56.h;
+
   _phoneNumberInput() => Container(
-        height: 56,
+        height: phoneNumberInputSize,
         child: Row(
           children: [
             GestureDetector(
               onTap: () async {
                 final country = await showCountrySelectorDialog();
-                Log.fine("aaaaaaaaaaaa", country.toString());
                 if (country != null) _signInController.country.value = country;
               },
               child: Container(
-                height: 56,
-                margin: EdgeInsets.only(right: 8.0),
-                padding: EdgeInsets.all(8.0),
+                height: phoneNumberInputSize,
+                margin: EdgeInsets.only(right: 8.w),
+                padding: EdgeInsets.all(8.w),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(4.0)),
+                    borderRadius: BorderRadius.circular(5.0)),
                 child: ObxValue<Rx<Country>>(
                   (country) => CountryFlag(country.value),
                   _signInController.country,
@@ -102,15 +100,16 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             Expanded(
               child: Container(
-                height: 56,
-                padding: EdgeInsets.only(right: 8.0, left: 8.0),
+                height: phoneNumberInputSize,
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(4.0)),
+                    borderRadius: BorderRadius.circular(5.0)),
                 child: TextFormField(
                   autofocus: false,
                   onChanged: (value) {
                     _signInController.rawPhoneNumber.value = value;
+                    _signInController.checkPhoneNumberIsCorrect();
                   },
                   validator: (value) {
                     if (value?.isEmpty == true) {
@@ -118,19 +117,20 @@ class _SignInScreenState extends State<SignInScreen> {
                     }
                   },
                   cursorColor: mColorTextHint,
-                  style: TextStyle(
-                      color: mColorTextSecondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 34),
+                  style: mTextFieldStyle.copyWith(
+                    fontSize: mSizeH3,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(8.0),
-                      fillColor: Colors.white,
-                      border: InputBorder.none,
-                      hintText: S.current.phone_number_hint,
-                      hintStyle: TextStyle(
-                          color: mColorTextHint,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 34)),
+                    contentPadding: EdgeInsets.all(8.w),
+                    fillColor: Colors.white,
+                    border: InputBorder.none,
+                    hintText: S.current.phone_number_hint,
+                    hintStyle: mHintStyle.copyWith(
+                      fontSize: mSizeH3,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -140,18 +140,18 @@ class _SignInScreenState extends State<SignInScreen> {
       );
 
   _continueVerifyCode() => Container(
-        margin: EdgeInsets.symmetric(vertical: 18.0),
-        child: Obx(
-          () => ButtonRadius(
-            height: 55.0,
+        margin: EdgeInsets.symmetric(vertical: 18.h),
+        child: ObxValue<RxBool>(
+          (phoneNumberIsCorrect) => ButtonRadius(
             label: S.current.next,
             background: mColorPrimary,
             textColor: Colors.white,
-            enable: _signInController.phoneNumberIsCorrect,
+            enable: phoneNumberIsCorrect.value,
             callback: () {
               _signInController.sendVerifyCode();
             },
           ),
+          _signInController.phoneNumberIsCorrect,
         ),
       );
 

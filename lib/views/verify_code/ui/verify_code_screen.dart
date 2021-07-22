@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_video_calls/data/auth/model/send_verify_type.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
+import 'package:flutter_video_calls/style/style.dart';
 import 'package:flutter_video_calls/views/verify_code/controller/verify_x.dart';
 import 'package:get/get.dart';
-import 'package:ui/style/style.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
   final Country? country;
@@ -107,15 +108,20 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                   ),
                   Text(
                     S.current.enter_verify_code,
-                    style: TextStyle(color: mColorBlack, fontSize: 16),
+                    style: mTitleStyle.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: mSizeH5,
+                    ),
                   ),
                   ObxValue<RxString>(
                       (normalizedNumber) => Text(
                             normalizedNumber.value,
-                            style: TextStyle(
-                                color: mColorBlack,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                            style: mTitleStyle.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: mSizeH5,
+                            ),
                           ),
                       _verifyController.normalizedNumber),
                   SizedBox(
@@ -128,22 +134,22 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                           ? ""
                           : S.current.enters_code_incorrect(
                               verifyIncorrectCount.value),
-                      style: TextStyle(color: Colors.red, fontSize: 14),
+                      style: mPrimaryTextStyle.copyWith(color: Colors.red),
                     ),
                     _verifyController.verifyIncorrectCount,
                   )
                 ],
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
                   child: ObxValue<RxInt>(
                       (codeExpireCountDown) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(S.current.have_not_received_verify_code,
-                                  style: TextStyle(
-                                      color: mColorTextSecondary,
-                                      fontSize: 16)),
+                              Text(
+                                S.current.have_not_received_verify_code,
+                                style: mPrimaryTextStyle,
+                              ),
                               GestureDetector(
                                 onTap: () {
                                   if (codeExpireCountDown.value <= 0) {
@@ -151,21 +157,20 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
                                   }
                                 },
                                 child: Text(
-                                  codeExpireCountDown.value > 0
-                                      ? S.current.request_new_code_in_seconds(
-                                          codeExpireCountDown.value)
-                                      : S.current.request_new_code,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                    codeExpireCountDown.value > 0
+                                        ? S.current.request_new_code_in_seconds(
+                                            codeExpireCountDown.value)
+                                        : S.current.request_new_code,
+                                    textAlign: TextAlign.center,
+                                    style: mActionTextStyle.copyWith(
+                                      fontSize: mSizeH5,
                                       color: codeExpireCountDown.value > 0
                                           ? mColorTextHint
                                           : mColorPrimaryLight,
                                       decoration: codeExpireCountDown.value > 0
                                           ? TextDecoration.none
                                           : TextDecoration.underline,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
+                                    )),
                               ),
                             ],
                           ),
@@ -188,20 +193,21 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen>
             }
           },
           cursorColor: mColorTextHint,
-          style: TextStyle(
-              color: mColorTextSecondary,
-              fontWeight: FontWeight.bold,
-              fontSize: 34),
+          style: mTextFieldStyle.copyWith(
+            fontSize: mSizeH3,
+            fontWeight: FontWeight.bold,
+          ),
           decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(8.0),
-              fillColor: Colors.white,
-              border: InputBorder.none,
-              hintText: '000000',
-              counterText: "",
-              hintStyle: TextStyle(
-                  color: mColorTextHint,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 34)),
+            contentPadding: EdgeInsets.all(8.w),
+            fillColor: Colors.white,
+            border: InputBorder.none,
+            hintText: '000000',
+            counterText: "",
+            hintStyle: mHintStyle.copyWith(
+              fontSize: mSizeH3,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           maxLength: 6,
           keyboardType: TextInputType.number,
           enableSuggestions: true,

@@ -51,7 +51,6 @@ class ResponseCode {
 }
 
 extension messageResponse on int {
-
   String? get message => messages[this];
 
   static final messages = <int, String>{

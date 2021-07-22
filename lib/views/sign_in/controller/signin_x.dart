@@ -5,7 +5,7 @@ import 'package:flutter_video_calls/data/auth/model/send_verify_type.dart';
 import 'package:flutter_video_calls/data/auth/model/verify_type_code.dart';
 import 'package:flutter_video_calls/data/auth/repositories/auth_repository.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
-import 'package:flutter_video_calls/views/dialogs/dialog.dart';
+import 'package:flutter_video_calls/views/common/dialogs/dialog.dart';
 import 'package:flutter_video_calls/views/verify_code/verify_code_route.dart';
 import 'package:get/get.dart';
 import 'package:libphonenumber/libphonenumber.dart';
@@ -24,14 +24,22 @@ class SignInController extends GetxController {
           flagUri: 'assets/flags/vn.png')
       .obs;
 
-  get phoneNumberIsCorrect =>
-      (rawPhoneNumber.value.length >= 7 && rawPhoneNumber.value.length < 11) ||
-      rawPhoneNumber.value.length == 14;
+  RxBool phoneNumberIsCorrect = false.obs;
+
+  checkPhoneNumberIsCorrect() async {
+    phoneNumberIsCorrect.value = await PhoneNumberUtil.isValidPhoneNumber(
+          phoneNumber: rawPhoneNumber.value,
+          isoCode: country.value.alpha2Code,
+        ) ??
+        false;
+  }
 
   void sendVerifyCode() async {
     try {
       final isValidPhoneNumber = await PhoneNumberUtil.isValidPhoneNumber(
-          phoneNumber: rawPhoneNumber.value, isoCode: country.value.alpha2Code);
+        phoneNumber: rawPhoneNumber.value,
+        isoCode: country.value.alpha2Code,
+      );
       if (isValidPhoneNumber != true) {
         showDialogError(content: S.current.code_1015);
         return;

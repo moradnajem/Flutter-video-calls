@@ -12,26 +12,39 @@ abstract class Env {
   }
 
   _init() {
-    runZonedGuarded(() async {
-      WidgetsFlutterBinding.ensureInitialized();
-      await const MethodChannel('flavor')
-          .invokeMethod<String>('getFlavor')
-          .then((String? flavor) async {
-        BuildConfig.init(flavor: flavor);
-      }).catchError((error) {});
-
-      await onInjection();
-      HttpOverrides.global = MyHttpOverrides();
-      final StatefulWidget app = await onCreate();
-
-      runApp(app);
-    }, (error, stack) {
-      print(error);
-      print(stack);
-    });
+    runZonedGuarded(
+      () async {
+        final StatefulWidget app = FutureBuilder(
+          future: await _onCreate(),
+          builder: (context, snapshot) {
+            return onCreateView();
+          },
+        );
+        runApp(app);
+      },
+      (error, stack) {
+        print(error);
+        print(stack);
+      },
+    );
   }
 
   Future? onInjection();
 
-  FutureOr<StatefulWidget> onCreate();
+  FutureOr<void> onCreate();
+
+  Widget onCreateView();
+
+  _onCreate() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await const MethodChannel('flavor').invokeMethod<String>('getFlavor').then(
+      (String? flavor) async {
+        BuildConfig.init(flavor: flavor);
+      },
+    ).catchError((error) {});
+
+    await onInjection();
+    HttpOverrides.global = MyHttpOverrides();
+    await onCreate();
+  }
 }
