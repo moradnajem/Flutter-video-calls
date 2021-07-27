@@ -13,7 +13,7 @@ import 'package:flutter_video_calls/data/auth/model/verify_code_request.dart';
 import 'package:flutter_video_calls/data/auth/model/verify_type_code.dart';
 import 'package:flutter_video_calls/data/auth/repositories/auth_repository.dart';
 import 'package:flutter_video_calls/data/country/model/country_model.dart';
-import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
+import 'package:flutter_video_calls/views/calls/calling/calling_route.dart';
 import 'package:flutter_video_calls/views/common/dialogs/dialog.dart';
 import 'package:get/get.dart';
 import 'package:libphonenumber/libphonenumber.dart';
@@ -101,7 +101,7 @@ class VerifyController extends GetxController {
       if (response != null && response.account != null) {
         await accountRepository.saveAccount(response.account!, response.token);
         reset();
-        CallOutRoute.push();
+        CallingRoute.push();
       } else {
         reset();
         Get.back();

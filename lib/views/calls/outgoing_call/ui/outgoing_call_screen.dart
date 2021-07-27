@@ -9,14 +9,14 @@ import 'package:flutter_video_calls/views/common/call/local_video_call.dart';
 import 'package:flutter_video_calls/views/common/text/shadow_text.dart';
 import 'package:get/get.dart';
 
-class CallOutScreen extends StatefulWidget {
-  const CallOutScreen({Key? key}) : super(key: key);
+class OutgoingCallScreen extends StatefulWidget {
+  const OutgoingCallScreen({Key? key}) : super(key: key);
 
   @override
-  _CallOutScreenState createState() => _CallOutScreenState();
+  _OutgoingCallScreenState createState() => _OutgoingCallScreenState();
 }
 
-class _CallOutScreenState extends State<CallOutScreen> {
+class _OutgoingCallScreenState extends State<OutgoingCallScreen> {
   @override
   void initState() {
     // Start full screen
@@ -159,7 +159,12 @@ class _CallOutScreenState extends State<CallOutScreen> {
               ),
               // Action back
               Container(
-                padding: EdgeInsets.all(12.w),
+                padding: EdgeInsets.only(
+                  top: 10.h,
+                  bottom: 10.h,
+                  left: 14.w,
+                  right: 6.w,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0.w),
                   border: Border.all(

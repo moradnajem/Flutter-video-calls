@@ -4,11 +4,11 @@ final Color mColorPrimary = HexColor.fromHex("#325A00");
 final Color mColorPrimaryLight = HexColor.fromHex("#228B22");
 
 const Color mColorNavigationBar = Colors.black;
-const Color mColorBackground = Colors.white;
+final Color mColorBackground = HexColor.fromHex('#F8FAFB');
 final Color mColorStatusColor = HexColor.fromHex('#33354E');
 
-final Color mColorScrim = HexColor.fromHex('#42000000');
-final Color mColorPrimaryScrim = HexColor.fromHex("#FF325A00");
+final Color mColorScrim = HexColor.fromHex('#42312324');
+final Color mColorPrimaryScrim = HexColor.fromHex("#FF312324");
 
 final Color mColorTextSecondary = HexColor.fromHex("#ABABAB");
 final Color mColorTextTitle = HexColor.fromHex("#838383");

@@ -1,4 +1,6 @@
-import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
+import 'package:flutter_video_calls/views/calls/calling/calling_route.dart';
+import 'package:flutter_video_calls/views/calls/incoming_call/incoming_call_route.dart';
+import 'package:flutter_video_calls/views/calls/outgoing_call/outgoing_call_route.dart';
 import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:flutter_video_calls/views/introduction/introduction_route.dart';
 import 'package:flutter_video_calls/views/sign_in/signin_route.dart';
@@ -11,5 +13,7 @@ void generateRoutes() {
   SignUpRoute();
   VerifyCodeRoute();
   HomeRoute();
-  CallOutRoute();
+  CallingRoute();
+  IncomingCallRoute();
+  OutgoingCallRoute();
 }

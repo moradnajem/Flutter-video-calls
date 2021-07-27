@@ -22,7 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(incorrectCount) =>
       "Mã không đúng. Bạn có thể thử thêm ${incorrectCount} lần nữa.";
 
-  static String m1(seconds) => "Yêu cầu gửi mã mới trong ${seconds}";
+  static String m1(userName) => "Good Afternoon ${userName}!";
+
+  static String m2(userName) => "Good Evening ${userName}!";
+
+  static String m3(userName) => "Good Morning ${userName}!";
+
+  static String m4(userName) => "Good Night ${userName}!";
+
+  static String m5(seconds) => "Yêu cầu gửi mã mới trong ${seconds}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -89,6 +97,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Nhập mã gồm 6 chữ số đã gửi tới"),
         "enters_code_incorrect": m0,
         "find_dial_code": MessageLookupByLibrary.simpleMessage("Tìm mã vùng"),
+        "good_afternoon": m1,
+        "good_evening": m2,
+        "good_morning": m3,
+        "good_night": m4,
         "have_not_received_verify_code":
             MessageLookupByLibrary.simpleMessage("Chưa nhận được mã?"),
         "invalid_credentials":
@@ -114,7 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "request": MessageLookupByLibrary.simpleMessage("Gửi yêu cầu"),
         "request_new_code":
             MessageLookupByLibrary.simpleMessage("Yêu cầu gửi mã mới"),
-        "request_new_code_in_seconds": m1,
+        "request_new_code_in_seconds": m5,
         "requested_new_code": MessageLookupByLibrary.simpleMessage(
             "Yêu cầu gửi mã mới thành công!"),
         "send_timeout": MessageLookupByLibrary.simpleMessage(

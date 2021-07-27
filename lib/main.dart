@@ -13,7 +13,8 @@ import 'package:flutter_video_calls/data/country/repositories/country_repository
 import 'package:flutter_video_calls/di/injection/injection.dart';
 import 'package:flutter_video_calls/manifest.dart';
 import 'package:flutter_video_calls/style/style.dart';
-import 'package:flutter_video_calls/views/call_out/call_out_route.dart';
+import 'package:flutter_video_calls/views/calls/calling/calling_route.dart';
+import 'package:flutter_video_calls/views/home/home_route.dart';
 import 'package:flutter_video_calls/views/introduction/introduction_route.dart';
 import 'package:get/get.dart';
 
@@ -54,7 +55,7 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   final route =
-      SessionPref.isSessionValid() ? CallOutRoute.ID : IntroductionRoute.ID;
+      SessionPref.isSessionValid() ? HomeRoute.ID : IntroductionRoute.ID;
 
   @override
   Widget build(BuildContext context) {

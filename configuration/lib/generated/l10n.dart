@@ -240,6 +240,46 @@ class S {
     );
   }
 
+  /// `Good Morning {userName}!`
+  String good_morning(Object userName) {
+    return Intl.message(
+      'Good Morning $userName!',
+      name: 'good_morning',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Good Afternoon {userName}!`
+  String good_afternoon(Object userName) {
+    return Intl.message(
+      'Good Afternoon $userName!',
+      name: 'good_afternoon',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Good Evening {userName}!`
+  String good_evening(Object userName) {
+    return Intl.message(
+      'Good Evening $userName!',
+      name: 'good_evening',
+      desc: '',
+      args: [userName],
+    );
+  }
+
+  /// `Good Night {userName}!`
+  String good_night(Object userName) {
+    return Intl.message(
+      'Good Night $userName!',
+      name: 'good_night',
+      desc: '',
+      args: [userName],
+    );
+  }
+
   /// `Mã không đúng. Bạn có thể thử thêm {incorrectCount} lần nữa.`
   String enters_code_incorrect(Object incorrectCount) {
     return Intl.message(

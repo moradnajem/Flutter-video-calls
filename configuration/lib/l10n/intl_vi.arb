@@ -19,8 +19,13 @@
   "request_new_code": "Yêu cầu gửi mã mới",
   "request": "Gửi yêu cầu",
   "requested_new_code": "Yêu cầu gửi mã mới thành công!",
-  "enters_code_incorrect": "Mã không đúng. Bạn có thể thử thêm {incorrectCount} lần nữa.",
+  "good_morning": "Good Morning {userName}!",
+  "good_afternoon": "Good Afternoon {userName}!",
+  "good_evening": "Good Evening {userName}!",
+  "good_night": "Good Night {userName}!",
 
+
+  "enters_code_incorrect": "Mã không đúng. Bạn có thể thử thêm {incorrectCount} lần nữa.",
   "database_exception": "Đang có vấn đề về dữ liệu. Vui lòng quay lại sau.",
 
   "invalid_credentials": "Invalid credentials",

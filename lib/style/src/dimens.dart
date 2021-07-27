@@ -9,5 +9,7 @@ final mSizePrimaryText = 15.0.sp;
 final mSizeTextField = 14.0.sp;
 final mSizeTextAction = 14.0.sp;
 
+final mAvatar = 50.0.w;
+
 final mSizeButton = 50.0.h;
 double mSpacing = 16.0.w;

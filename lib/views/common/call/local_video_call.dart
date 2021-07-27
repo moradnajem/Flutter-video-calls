@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:configuration/di/di_module.dart';
 import 'package:configuration/utility/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_calls/data/webrtc/signaling.dart';
+import 'package:flutter_video_calls/style/style.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LocalVideoCall extends StatefulWidget {
   const LocalVideoCall({Key? key}) : super(key: key);
@@ -42,8 +46,8 @@ class _LocalVideoCallState extends State<LocalVideoCall> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 90.0,
-      height: 120.0,
+      width: 83.w,
+      height: 147.7.h,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(12),
@@ -72,12 +76,15 @@ class _LocalVideoCallState extends State<LocalVideoCall> {
             ),
           ),
           Positioned(
-              top: 6,
-              right: 6,
-              child: Icon(
-                Icons.zoom_out_map,
-                size: 18,
-                color: Colors.white,
+              top: 4.h,
+              right: 4.w,
+              child: Transform.rotate(
+                angle: 180 * pi / 100,
+                child: Icon(
+                  Icons.arrow_forward_outlined,
+                  size: 18,
+                  color: mActionColor,
+                ),
               ))
         ],
       ),

@@ -94,7 +94,7 @@ class BuildConfig {
   }
 
   static String flavorName() =>
-      StringUtils.enumToName(_instance?.flavor.toString() ?? "");
+      (_instance?.flavor.toString() ?? "").enumToName();
 
   static bool isRelease() => _instance?.flavor == Flavor.RELEASE;
 
